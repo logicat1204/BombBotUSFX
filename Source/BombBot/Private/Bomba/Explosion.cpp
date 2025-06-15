@@ -9,7 +9,6 @@
 #include <Kismet/GameplayStatics.h>
 #include "GameFramework/Character.h"
 #include "BombBotCharacter.h"
-#include "Enemigo_Comun.h"
 
 //Para encender las otras bombas al impactarlas
 #include "Bomba/Bomba.h"
@@ -115,35 +114,17 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
             if (PlayerCharacter)
             {
                 UE_LOG(LogTemp, Warning, TEXT("Enemigo toco a: %s"), *PlayerCharacter->GetName());
-                // Llamar a la función para que el jugador pierda una vida
+                // Llamar a la funciï¿½n para que el jugador pierda una vida
                 PlayerCharacter->TakeDamageAndLoseLife();
 
-                // Aquí podrías añadir lógica adicional para el enemigo, como:
-                // - Destruirse a sí mismo después de dañar al jugador: Destroy();
-                // - Desactivar su colisión por un tiempo para no dañar repetidamente:
+                // Aquï¿½ podrï¿½as aï¿½adir lï¿½gica adicional para el enemigo, como:
+                // - Destruirse a sï¿½ mismo despuï¿½s de daï¿½ar al jugador: Destroy();
+                // - Desactivar su colisiï¿½n por un tiempo para no daï¿½ar repetidamente:
                 //   CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
                 //   FTimerHandle TempTimer;
                 //   GetWorldTimerManager().SetTimer(TempTimer, [this]() { if(CollisionComp) CollisionComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly); }, 2.0f, false);
             }
         }
-
-        if (AEnemigo_Comun* Enemigo = Cast<AEnemigo_Comun>(OtherActor)) {
-
-            Enemigo->Destroy();
-        }
-        //else if (OtherActor->IsA(AShield::StaticClass()))
-        //{
-        //    // Ejemplo: destruir el escudo al contacto
-        //    OtherActor->Destroy();
-
-        //    // Tal vez también destruir la explosión
-        //    Destroy();
-        //}
-        //else if (AEnemigo* Enemigo = Cast<AEnemigo>(OtherActor))
-        //{
-        //    Enemigo->ReducirVida();
-        //    Destroy();
-        //}
         if (AEnemigo_Comun* Enemigo = Cast<AEnemigo_Comun>(OtherActor))
         {
             Enemigo->Destroy();
@@ -166,7 +147,7 @@ void AExplosion::efecto_explosion(FVector Location)
             ExplosionEffect,
             Location,
             FRotator::ZeroRotator,
-            //ExplosionScale,  // Aquí se aplica la escala
+            //ExplosionScale,  // Aquï¿½ se aplica la escala
             true
         );
     }
