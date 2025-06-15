@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Power_Ups/PowerUp.h"
 #include "GameFramework/Actor.h"
 #include "PoweUp_Curacion.generated.h"
-
 UCLASS()
-class BOMBBOT_API APoweUp_Curacion : public AActor
+class BOMBBOT_API APoweUp_Curacion : public APowerUp
 {
 	GENERATED_BODY()
 	
@@ -16,11 +16,15 @@ public:
 	APoweUp_Curacion();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual bool ActivatePowerUp(class ABombBotCharacter* PlayerCharacter) override;
 
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PowerUp")
+	int32 CantidadCuracion = 1;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* MallaPowerUp;
 };

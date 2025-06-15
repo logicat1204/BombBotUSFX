@@ -3,6 +3,7 @@
 
 #include "Generador_Enemigos.h"
 #include "Enemigo_Comun.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AGenerador_Enemigos::AGenerador_Enemigos()
@@ -46,5 +47,10 @@ void AGenerador_Enemigos::SpawnEnemy()
 	SpawnLocation.Z += 100.0f; // Ajustar la altura de aparición del enemigo
 	FRotator SpawnRotation = GetActorRotation();
 	AEnemigo_Comun* SpawnedEnemy = GetWorld()->SpawnActor<AEnemigo_Comun>(AEnemigo_Comun::StaticClass(), SpawnLocation, SpawnRotation);
+	cont_Enemigos++;
+	if (cont_Enemigos >= 3) {
+		SpawnedEnemy->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+        // Al inicio del archivo, agrega el include necesario para el componente de movimiento de personaje
+	}
 }
 

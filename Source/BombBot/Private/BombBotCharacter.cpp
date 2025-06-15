@@ -14,9 +14,7 @@
 #include "Engine/World.h"   // Necesario para GetWorld()
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
-
 #include "Bomba/Bomba.h"
-
 #include "BombBotGameInstance.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -584,4 +582,58 @@ void ABombBotCharacter::AddScore(int32 Amount)
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("Failed to add score: GameInstance is null"));
 	}
+}
+
+void ABombBotCharacter::ActivateSpeedBoost(float Multiplier, float Duration)
+{
+	UCharacterMovementComponent* MoveComp = GetCharacterMovement();
+	if (!MoveComp) return;
+
+	// Si ya hay un boost activo, lo reseteamos antes de aplicar el nuevo.
+	GetWorld()->GetTimerManager().ClearTimer(TimerHandle_SpeedBoost);
+
+	// Solo guardamos la velocidad original si no teníamos ya un boost activo.
+	if (!bIsSpeedBoosted)
+	{
+		OriginalMaxWalkSpeed = MoveComp->MaxWalkSpeed;
+		bIsSpeedBoosted = true;
+	}
+
+	// Aplicamos el nuevo multiplicador a la velocidad original guardada
+	MoveComp->MaxWalkSpeed = OriginalMaxWalkSpeed * Multiplier;
+
+	UE_LOG(LogTemp, Log, TEXT("SPEED BOOST ACTIVADO. Nueva velocidad: %f"), MoveComp->MaxWalkSpeed);
+
+	// Iniciamos el temporizador para desactivar el boost
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_SpeedBoost, this, &ABombBotCharacter::DeactivateSpeedBoost, Duration, false);
+}
+
+void ABombBotCharacter::DeactivateSpeedBoost()
+{
+	UCharacterMovementComponent* MoveComp = GetCharacterMovement();
+	if (!MoveComp) return;
+
+	// Restauramos la velocidad a su valor original
+	MoveComp->MaxWalkSpeed = OriginalMaxWalkSpeed;
+	bIsSpeedBoosted = false; // Marcamos que el boost ya no está activo
+
+	UE_LOG(LogTemp, Log, TEXT("SPEED BOOST TERMINADO. Velocidad restaurada a: %f"), MoveComp->MaxWalkSpeed);
+}
+
+void ABombBotCharacter::ActivateImmortality(float Duration)
+{
+	// Si ya somos inmortales, simplemente reseteamos la duración del efecto.
+	GetWorld()->GetTimerManager().ClearTimer(TimerHandle_Immortality);
+
+	// Activamos la inmortalidad
+	SetImmortality(true);
+
+	// Iniciamos el temporizador para desactivarla
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_Immortality, this, &ABombBotCharacter::DeactivateImmortality, Duration, false);
+}
+
+void ABombBotCharacter::DeactivateImmortality()
+{
+	// Simplemente llamamos a la función que ya tenías para desactivar el estado.
+	SetImmortality(false);
 }
