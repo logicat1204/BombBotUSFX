@@ -21,6 +21,7 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	APawn* PlayerForScore;
 private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* ExplosionMesh;
@@ -50,4 +51,6 @@ public:
 	FVector DeltaMove;
 
 	void efecto_explosion(FVector Location);
+
+	void AddScoreForExplosion(int32 Amount);
 };

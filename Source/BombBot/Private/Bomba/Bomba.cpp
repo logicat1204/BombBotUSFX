@@ -62,7 +62,7 @@ void ABomba::BeginPlay()
     if (AnimacionBomba)
     {
         MallaBomba->PlayAnimation(AnimacionBomba, true);
-        GEngine->AddOnScreenDebugMessage(1, 15.0f, FColor::Black, TEXT("Se ha reproducido la animacion de la bomba"));
+        //GEngine->AddOnScreenDebugMessage(1, 15.0f, FColor::Black, TEXT("Se ha reproducido la animacion de la bomba"));
     }
     GetWorld()->GetTimerManager().SetTimer(TimerHandle_Disparar, this, &ABomba::Shoot, tiempo_explosion, false); // Dispara cada 5 segundos
     GetWorld()->GetTimerManager().SetTimer(TH_Explosion, this, &ABomba::explotar, tiempo_explosion + 0.05f, false);

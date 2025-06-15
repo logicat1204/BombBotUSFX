@@ -33,7 +33,7 @@ void AWorld2_Factory::Tick(float DeltaTime)
 void AWorld2_Factory::CreateMap()
 {
 	//Creacion de la parte superior del mapa
-	AlturaBloques = 6300.0f;
+	AlturaBloques = 6400.0f;
 	CreateBlocks(BasicMap, AlturaBloques);
 }
 
