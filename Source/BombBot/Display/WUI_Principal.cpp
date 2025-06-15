@@ -27,6 +27,15 @@ void UWUI_Principal::ReducirVida()
     }
 }
 
+void UWUI_Principal::RecuperarVida()
+{
+    if (VidaActual < 3)
+    {
+        VidaActual++;
+        ActualizarSalud();
+    }
+}
+
 void UWUI_Principal::ReducirBombas()
 {
     if (BombasActuales > 0)
