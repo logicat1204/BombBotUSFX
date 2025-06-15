@@ -14,9 +14,7 @@
 #include "Engine/World.h"   // Necesario para GetWorld()
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
-
 #include "Bomba/Bomba.h"
-
 #include "BombBotGameInstance.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -118,6 +116,9 @@ void ABombBotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABombBotCharacter::Look);
 
+
+		// Looking
+		EnhancedInputComponent->BindAction(PausarJuego, ETriggerEvent::Started, this, &ABombBotCharacter::PausarElJuego);
 		// Colocar bomba
 		// Controles creados
 		// Colocar Bomba
@@ -525,6 +526,50 @@ bool ABombBotCharacter::CanPlaceBombAtCurrentLocation()
 	return true; // No hay bombas cerca, se puede colocar
 }
 
+void ABombBotCharacter::PausarElJuego()
+{
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (!PC) return;
+
+	// Usar el estado de pausa del mundo
+	bool bIsGamePaused = UGameplayStatics::IsGamePaused(GetWorld());
+
+	if (!bIsGamePaused)
+	{
+		// Crear el widget si aún no existe
+		if (WidgetPausaClass && !WidgetPausaInstance)
+		{
+			WidgetPausaInstance = CreateWidget<UUserWidget>(PC, WidgetPausaClass);
+		}
+
+		if (WidgetPausaInstance)
+		{
+			WidgetPausaInstance->AddToViewport();
+
+			// Pausar el juego
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+			// Mostrar el cursor y permitir input del UI
+			PC->bShowMouseCursor = true;
+			FInputModeUIOnly InputMode;
+			PC->SetInputMode(InputMode);
+		}
+	}
+	else
+	{
+		// Reanudar el juego
+		if (WidgetPausaInstance)
+		{
+			WidgetPausaInstance->RemoveFromParent();
+		}
+
+		UGameplayStatics::SetGamePaused(GetWorld(), false);
+		PC->bShowMouseCursor = false;
+		FInputModeGameOnly InputMode;
+		PC->SetInputMode(InputMode);
+	}
+}
+
 //Con este metodo podemos agregar puntaje al GameInstance.
 void ABombBotCharacter::AddScore(int32 Amount)
 {
@@ -532,4 +577,58 @@ void ABombBotCharacter::AddScore(int32 Amount)
 	{
 		LifeUI->AumentarScore(Amount);
 	}
+}
+
+void ABombBotCharacter::ActivateSpeedBoost(float Multiplier, float Duration)
+{
+	UCharacterMovementComponent* MoveComp = GetCharacterMovement();
+	if (!MoveComp) return;
+
+	// Si ya hay un boost activo, lo reseteamos antes de aplicar el nuevo.
+	GetWorld()->GetTimerManager().ClearTimer(TimerHandle_SpeedBoost);
+
+	// Solo guardamos la velocidad original si no teníamos ya un boost activo.
+	if (!bIsSpeedBoosted)
+	{
+		OriginalMaxWalkSpeed = MoveComp->MaxWalkSpeed;
+		bIsSpeedBoosted = true;
+	}
+
+	// Aplicamos el nuevo multiplicador a la velocidad original guardada
+	MoveComp->MaxWalkSpeed = OriginalMaxWalkSpeed * Multiplier;
+
+	UE_LOG(LogTemp, Log, TEXT("SPEED BOOST ACTIVADO. Nueva velocidad: %f"), MoveComp->MaxWalkSpeed);
+
+	// Iniciamos el temporizador para desactivar el boost
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_SpeedBoost, this, &ABombBotCharacter::DeactivateSpeedBoost, Duration, false);
+}
+
+void ABombBotCharacter::DeactivateSpeedBoost()
+{
+	UCharacterMovementComponent* MoveComp = GetCharacterMovement();
+	if (!MoveComp) return;
+
+	// Restauramos la velocidad a su valor original
+	MoveComp->MaxWalkSpeed = OriginalMaxWalkSpeed;
+	bIsSpeedBoosted = false; // Marcamos que el boost ya no está activo
+
+	UE_LOG(LogTemp, Log, TEXT("SPEED BOOST TERMINADO. Velocidad restaurada a: %f"), MoveComp->MaxWalkSpeed);
+}
+
+void ABombBotCharacter::ActivateImmortality(float Duration)
+{
+	// Si ya somos inmortales, simplemente reseteamos la duración del efecto.
+	GetWorld()->GetTimerManager().ClearTimer(TimerHandle_Immortality);
+
+	// Activamos la inmortalidad
+	SetImmortality(true);
+
+	// Iniciamos el temporizador para desactivarla
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_Immortality, this, &ABombBotCharacter::DeactivateImmortality, Duration, false);
+}
+
+void ABombBotCharacter::DeactivateImmortality()
+{
+	// Simplemente llamamos a la función que ya tenías para desactivar el estado.
+	SetImmortality(false);
 }

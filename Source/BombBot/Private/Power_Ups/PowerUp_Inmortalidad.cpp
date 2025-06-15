@@ -1,27 +1,36 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Power_Ups/PowerUp_Inmortalidad.h"
+#include "BombBotCharacter.h" 
+#include "TimerManager.h"     // El header que contiene la funcionalidad de los timers.
 
-// Sets default values
 APowerUp_Inmortalidad::APowerUp_Inmortalidad()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 
+	PrimaryActorTick.bCanEverTick = false;
+	MallaPowerUp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MallaPowerUp"));
+	MallaPowerUp->SetupAttachment(RootComponent);
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> ObjetoMallaP(TEXT("/Script/Engine.StaticMesh'/Game/Assets/Blender/inmortalidad/inmoBLender.inmoBLender'"));
+
+    if (ObjetoMallaP.Succeeded())
+    {
+        MallaPowerUp->SetStaticMesh(ObjetoMallaP.Object);
+        //MallaPowerUp->SetWorldScale3D(FVector(2.0f, 2.0f, 2.0f));
+    }
 }
 
-// Called when the game starts or when spawned
-void APowerUp_Inmortalidad::BeginPlay()
+bool APowerUp_Inmortalidad::ActivatePowerUp(ABombBotCharacter* PlayerCharacter)
 {
-	Super::BeginPlay();
-	
+    Super::ActivatePowerUp(PlayerCharacter);
+
+    if (PlayerCharacter)
+    {
+        // Le decimos al personaje que se haga inmortal por un tiempo.
+        PlayerCharacter->ActivateImmortality(DuracionInmortalidad);
+
+        // Retornamos true para que la clase base destruya este actor.
+        return true;
+    }
+
+    return false;
 }
-
-// Called every frame
-void APowerUp_Inmortalidad::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

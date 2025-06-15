@@ -52,6 +52,9 @@ class ABombBotCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SetBomb;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* PausarJuego;
+
 public:
 	ABombBotCharacter();
 
@@ -78,6 +81,8 @@ protected:
 	void OnBombDestroyed(AActor* DestroyedActor);
 
 	bool CanPlaceBombAtCurrentLocation();
+
+	void PausarElJuego();
 
 protected:
 	TArray<ABomba*> PlacedBombs;
@@ -165,6 +170,34 @@ public:
 	UPROPERTY()
 	UUserWidget* GameOverWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<class UUserWidget> WidgetPausaClass;
 
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	void ActivateSpeedBoost(float Multiplier, float Duration);
 
+	/** Activa la inmortalidad temporal en el personaje. */
+	UFUNCTION(BlueprintCallable, Category = "PowerUps")
+	void ActivateImmortality(float Duration);
+
+private:
+	UUserWidget* WidgetPausaInstance;
+
+	/** Revierte el efecto del aumento de velocidad. */
+	void DeactivateSpeedBoost();
+
+	/** Revierte el efecto de inmortalidad (aunque podemos reusar SetImmortality). */
+	void DeactivateImmortality();
+
+	// --- NUEVAS VARIABLES PARA GESTIONAR ESTADOS ---
+
+	/** Guarda la velocidad de caminar original del personaje antes del boost. */
+	float OriginalMaxWalkSpeed;
+
+	/** Un flag para saber si el boost de velocidad está activo. */
+	bool bIsSpeedBoosted;
+
+	/** Handles para los temporizadores de los efectos. */
+	FTimerHandle TimerHandle_SpeedBoost;
+	FTimerHandle TimerHandle_Immortality;
 };

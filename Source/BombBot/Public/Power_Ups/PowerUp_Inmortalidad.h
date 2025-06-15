@@ -4,23 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Power_Ups/PowerUp.h"
 #include "PowerUp_Inmortalidad.generated.h"
-
 UCLASS()
-class BOMBBOT_API APowerUp_Inmortalidad : public AActor
+class BOMBBOT_API APowerUp_Inmortalidad : public APowerUp
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
+
 	APowerUp_Inmortalidad();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual bool ActivatePowerUp(class ABombBotCharacter* PlayerCharacter) override;
 
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PowerUp")
+	float DuracionInmortalidad = 5.0f; // Duración
+
+private:
+
+	FTimerHandle TimerHandle_Inmortalidad;
+
+	TWeakObjectPtr<class ABombBotCharacter> PersonajeAfectado;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* MallaPowerUp;
 };
