@@ -528,13 +528,8 @@ bool ABombBotCharacter::CanPlaceBombAtCurrentLocation()
 //Con este metodo podemos agregar puntaje al GameInstance.
 void ABombBotCharacter::AddScore(int32 Amount)
 {
-	UBombBotGameInstance* GameInstance = Cast<UBombBotGameInstance>(GetGameInstance());
-	if (GameInstance)
+	if (LifeUI)
 	{
-		GameInstance->AddScore(Amount);
-	}
-	else
-	{
-		UE_LOG(LogTemplateCharacter, Error, TEXT("Failed to add score: GameInstance is null"));
+		LifeUI->AumentarScore(Amount);
 	}
 }

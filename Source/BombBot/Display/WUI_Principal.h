@@ -43,6 +43,14 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Bombas")
     void AumentarBombas();
 
+    //Funcion para updatear score.
+    UFUNCTION(BlueprintCallable, Category = "Score")
+    void AumentarScore(int32 AddScore);
+
+    //Funcion para updatear score.
+    UFUNCTION(BlueprintCallable, Category = "Score")
+    void ActualizarScore();
+
 protected:
     virtual void NativeConstruct() override;
 
@@ -58,6 +66,9 @@ protected:
 
     UPROPERTY(meta = (BindWidget))
     class UTextBlock* CantBombs;
+
+    UPROPERTY(meta = (BindWidget))
+    class UTextBlock* ScoreTXT;
 
 private:
     void ActualizarSalud();

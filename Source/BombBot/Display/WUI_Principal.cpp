@@ -4,6 +4,8 @@
 #include "BombBot/Display/WUI_Principal.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "BombBotGameInstance.h"
+
 
 void UWUI_Principal::NativeConstruct()
 {
@@ -13,6 +15,7 @@ void UWUI_Principal::NativeConstruct()
     ActualizarSalud();
     BombasActuales = MaxBombas;
     ActualizarBombas();
+    ActualizarScore();
 }
 
 void UWUI_Principal::ReducirVida()
@@ -39,6 +42,25 @@ void UWUI_Principal::AumentarBombas()
     {
         BombasActuales++;
         ActualizarBombas();
+    }
+}
+
+void UWUI_Principal::AumentarScore(int32 AddScore)
+{
+    UBombBotGameInstance* GameInstance = Cast<UBombBotGameInstance>(GetGameInstance());
+    if (GameInstance)
+    {
+        GameInstance->AddScore(AddScore);
+    }
+    ActualizarScore();
+}
+
+void UWUI_Principal::ActualizarScore()
+{
+    UBombBotGameInstance* GameInstance = Cast<UBombBotGameInstance>(GetGameInstance());
+    if (GameInstance&&ScoreTXT)
+    {
+        ScoreTXT->SetText(FText::AsNumber(GameInstance->GetScore()));
     }
 }
 
