@@ -52,6 +52,9 @@ class ABombBotCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SetBomb;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* PausarJuego;
+
 public:
 	ABombBotCharacter();
 
@@ -78,6 +81,8 @@ protected:
 	void OnBombDestroyed(AActor* DestroyedActor);
 
 	bool CanPlaceBombAtCurrentLocation();
+
+	void PausarElJuego();
 
 protected:
 	TArray<ABomba*> PlacedBombs;
@@ -165,6 +170,10 @@ public:
 	UPROPERTY()
 	UUserWidget* GameOverWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<class UUserWidget> WidgetPausaClass;
 
+private:
+	UUserWidget* WidgetPausaInstance;
 
 };

@@ -118,6 +118,9 @@ void ABombBotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABombBotCharacter::Look);
 
+
+		// Looking
+		EnhancedInputComponent->BindAction(PausarJuego, ETriggerEvent::Started, this, &ABombBotCharacter::PausarElJuego);
 		// Colocar bomba
 		// Controles creados
 		// Colocar Bomba
@@ -523,6 +526,50 @@ bool ABombBotCharacter::CanPlaceBombAtCurrentLocation()
 	}
 
 	return true; // No hay bombas cerca, se puede colocar
+}
+
+void ABombBotCharacter::PausarElJuego()
+{
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (!PC) return;
+
+	// Usar el estado de pausa del mundo
+	bool bIsGamePaused = UGameplayStatics::IsGamePaused(GetWorld());
+
+	if (!bIsGamePaused)
+	{
+		// Crear el widget si aún no existe
+		if (WidgetPausaClass && !WidgetPausaInstance)
+		{
+			WidgetPausaInstance = CreateWidget<UUserWidget>(PC, WidgetPausaClass);
+		}
+
+		if (WidgetPausaInstance)
+		{
+			WidgetPausaInstance->AddToViewport();
+
+			// Pausar el juego
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+			// Mostrar el cursor y permitir input del UI
+			PC->bShowMouseCursor = true;
+			FInputModeUIOnly InputMode;
+			PC->SetInputMode(InputMode);
+		}
+	}
+	else
+	{
+		// Reanudar el juego
+		if (WidgetPausaInstance)
+		{
+			WidgetPausaInstance->RemoveFromParent();
+		}
+
+		UGameplayStatics::SetGamePaused(GetWorld(), false);
+		PC->bShowMouseCursor = false;
+		FInputModeGameOnly InputMode;
+		PC->SetInputMode(InputMode);
+	}
 }
 
 //Con este metodo podemos agregar puntaje al GameInstance.
