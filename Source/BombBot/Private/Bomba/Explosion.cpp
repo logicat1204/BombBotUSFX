@@ -9,9 +9,7 @@
 #include <Kismet/GameplayStatics.h>
 #include "GameFramework/Character.h"
 #include "BombBotCharacter.h"
-<<<<<<< HEAD
 #include "Enemigo_Comun.h"
-=======
 
 //Para encender las otras bombas al impactarlas
 #include "Bomba/Bomba.h"
@@ -19,7 +17,6 @@
 
 #include "Enemigo_Comun.h"
 
->>>>>>> RamaAlvaro
 //Para efecto explosion
 //kismet GameplayStatics tambien se usa
 #include "Particles/ParticleSystem.h"
@@ -129,13 +126,11 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
                 //   GetWorldTimerManager().SetTimer(TempTimer, [this]() { if(CollisionComp) CollisionComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly); }, 2.0f, false);
             }
         }
-<<<<<<< HEAD
 
         if (AEnemigo_Comun* Enemigo = Cast<AEnemigo_Comun>(OtherActor)) {
 
             Enemigo->Destroy();
         }
-
         //else if (OtherActor->IsA(AShield::StaticClass()))
         //{
         //    // Ejemplo: destruir el escudo al contacto
@@ -149,8 +144,6 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
         //    Enemigo->ReducirVida();
         //    Destroy();
         //}
-
-=======
         if (AEnemigo_Comun* Enemigo = Cast<AEnemigo_Comun>(OtherActor))
         {
             Enemigo->Destroy();
@@ -161,7 +154,6 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
             OtraBomba->Destroy();
             Destroy();
         }
->>>>>>> RamaAlvaro
     }
 }
 
