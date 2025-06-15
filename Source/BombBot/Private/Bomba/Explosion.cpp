@@ -20,6 +20,8 @@
 //kismet GameplayStatics tambien se usa
 #include "Particles/ParticleSystem.h"
 
+//Para modificar el score usamos nuestro character
+#include "BombBotCharacter.h"
 
 // Sets default values
 AExplosion::AExplosion()
@@ -129,6 +131,7 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
         {
             Enemigo->Destroy();
             //Destroy();
+            AddScoreForExplosion(100);
         }
         if (ALockSphere* OtraBomba = Cast<ALockSphere>(OtherActor))
         {
@@ -150,5 +153,25 @@ void AExplosion::efecto_explosion(FVector Location)
             //ExplosionScale,  // Aquï¿½ se aplica la escala
             true
         );
+    }
+}
+
+void AExplosion::AddScoreForExplosion(int32 Amount)
+{
+    PlayerForScore = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+    if (PlayerForScore)
+    {
+        ABombBotCharacter* BombBotPlayer = Cast<ABombBotCharacter>(PlayerForScore);
+        if (BombBotPlayer)
+        {
+            // Aquí puedes modificar el puntaje del jugador
+            BombBotPlayer->AddScore(Amount);
+
+            UE_LOG(LogTemp, Warning, TEXT("Puntaje aumentado en %d para %s"), Amount, *BombBotPlayer->GetName());
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("No se pudo castear el pawn a ABombBotCharacter."));
+        }
     }
 }
