@@ -10,7 +10,7 @@ ABloque_Madera::ABloque_Madera()
     PrimaryActorTick.bCanEverTick = true;
     if (MallaBloque)
     {
-        static ConstructorHelpers::FObjectFinder<UMaterial> MaterialBase(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/NewBoxAsset/Textures/U_Box1.U_Box1'"));
+        static ConstructorHelpers::FObjectFinder<UMaterial> MaterialBase(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/NewBoxAsset/Textures/U_Box3.U_Box3'"));
 
         if (MaterialBase.Succeeded())
         {
