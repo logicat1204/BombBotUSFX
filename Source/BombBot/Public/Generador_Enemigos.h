@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Enemigo_Comun.h"
 #include "Generador_Enemigos.generated.h"
 
 UCLASS()
@@ -31,4 +32,8 @@ public:
 	float SpawnInterval = 5.0f; // Intervalo de tiempo entre spawns
 	float PreSpawnTime = 5.f; // Tiempo de pre-spawn antes de que el enemigo aparezca
 	float cont_Enemigos = 0;
+    
+    // **NUEVO:** Variable privada para almacenar la clase Blueprint cargada
+    UPROPERTY(EditDefaultsOnly, Category = "Enemigos")
+    TSubclassOf<AEnemigo_Comun> EnemigoBlueprintToSpawn;
 };

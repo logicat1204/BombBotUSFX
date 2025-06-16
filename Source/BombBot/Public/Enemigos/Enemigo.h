@@ -31,6 +31,10 @@ public:
     UPROPERTY(VisibleAnywhere)
     UStaticMeshComponent* Malla;
 
+    // Propiedad para asignar el Animation Blueprint desde el editor de Unreal
+        UPROPERTY(EditDefaultsOnly, Category = "Animation")
+        TSubclassOf<UAnimInstance> AnimationBlueprint;
+    
     // Referencia al jugador
     AActor* PlayerActor;
 

@@ -21,32 +21,23 @@ AEnemigo_Comun::AEnemigo_Comun()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    // Crear el componente raíz
-    GetMesh()->SetHiddenInGame(true);
+    // NO cargar el Skeletal Mesh aqu’. Permitir que se asigne en el Blueprint.
+    // Solo se realiza la configuraci—n b‡sica si es necesario.
+    USkeletalMeshComponent* CharacterMesh = GetMesh();
 
-    // Crear la malla estática
-    Malla = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Malla"));
-    Malla->SetupAttachment(RootComponent);
-
-    // Configurar la malla estática
-    static ConstructorHelpers::FObjectFinder<UStaticMesh> CuboMesh(TEXT("/Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'"));
-    if (CuboMesh.Succeeded())
+    if (CharacterMesh)
     {
-        // Asignar la malla estática
-        Malla->SetStaticMesh(CuboMesh.Object);
-        // Configurar la escala y la ubicación
-        Malla->SetRelativeLocation(FVector(0.0f, 0.0f, 40.0f));
-        // Configurar la escala
-        Malla->SetWorldScale3D(FVector(1.0f));
-        // Configurar la colisión
-        //Para que el enemigo colisione con el jugador
-        Malla->SetCollisionObjectType(ECC_Pawn);
-        // Para que no colisione con lo demas
-        Malla->SetCollisionResponseToAllChannels(ECR_Ignore);
-        Malla->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-        Malla->SetGenerateOverlapEvents(true);
+        // Ajustar la posici—n, rotaci—n y escala del mesh si es necesario
+        // Estos valores son en relaci—n al componente padre (CapsuleComponent en este caso)
+        CharacterMesh->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
+        CharacterMesh->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+        CharacterMesh->SetRelativeScale3D(FVector(1.0f));
     }
-
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("CharacterMesh (GetMesh()) is null in AEnemigoAcuatico constructor!"));
+    }
+    
     // IA
     AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
     AIControllerClass = AAIController::StaticClass();
@@ -66,7 +57,7 @@ void AEnemigo_Comun::BeginPlay()
     }
 
     // Configurar el evento de colisión
-    Malla->OnComponentBeginOverlap.AddDynamic(this, &AEnemigo_Comun::OnOverlapJugador);
+    GetMesh()->OnComponentBeginOverlap.AddDynamic(this, &AEnemigo_Comun::OnOverlapJugador);
 
     // Patrulla hasta el siguiente punto
     if (PuntosDePatrulla.Num() > 0)
@@ -81,26 +72,45 @@ void AEnemigo_Comun::BeginPlay()
 void AEnemigo_Comun::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
+    
+    USkeletalMeshComponent* CharacterMesh = GetMesh();
+    if (CharacterMesh)
+    {
+        // Asignar el Animation Blueprint si ha sido establecido en el editor
+        if (AnimationBlueprint)
+        {
+            CharacterMesh->SetAnimInstanceClass(AnimationBlueprint);
+            UE_LOG(LogTemp, Log, TEXT("Animation Blueprint assigned to mesh in BeginPlay!"));
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("AnimationBlueprint is not set for AEnemigoAcuatico!"));
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("CharacterMesh (GetMesh()) is null in AEnemigoAcuatico::BeginPlay()!"));
+    }
+    
     if (!PlayerActor || !AIController) return;
-
+    
     FVector DireccionAlJugador = (PlayerActor->GetActorLocation() - GetActorLocation()).GetSafeNormal();
     FVector DireccionFrente = GetActorForwardVector();
     float Distancia = FVector::Dist(GetActorLocation(), PlayerActor->GetActorLocation());
     float Angulo = FMath::RadiansToDegrees(acosf(FVector::DotProduct(DireccionFrente, DireccionAlJugador)));
-
+    
     const float RangoVision = 400.0f;
     const float AnguloVision = 30.0f;
-
+    
     DrawDebugCone(GetWorld(), GetActorLocation(), DireccionFrente, RangoVision,
-        FMath::DegreesToRadians(AnguloVision), FMath::DegreesToRadians(AnguloVision),
-        12, FColor::Yellow, false, -1.0f, 0, 1.0f);
-
+                  FMath::DegreesToRadians(AnguloVision), FMath::DegreesToRadians(AnguloVision),
+                  12, FColor::Yellow, false, -1.0f, 0, 1.0f);
+    
     // Si cualquier enemigo vio al jugador, o este lo está viendo
     if (bJugadorDetectado || (Distancia <= RangoVision && Angulo <= AnguloVision))
     {
         bJugadorDetectado = true;  // Si este enemigo lo ve, notifica a los demás
-
+        
         //GetCharacterMovement()->MaxWalkSpeed = 400.0f;
         AIController->MoveToActor(PlayerActor, 15.0f);
         if (IsValid(this) && !IsActorBeingDestroyed() && GetWorld())

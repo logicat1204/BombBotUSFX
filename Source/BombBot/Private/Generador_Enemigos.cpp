@@ -4,6 +4,7 @@
 #include "Generador_Enemigos.h"
 #include "Enemigo_Comun.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "UObject/ConstructorHelpers.h"
 
 // Sets default values
 AGenerador_Enemigos::AGenerador_Enemigos()
@@ -23,6 +24,22 @@ AGenerador_Enemigos::AGenerador_Enemigos()
 		Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		Mesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	}
+    
+    // **NUEVO:** Cargar el Blueprint del enemigo desde el constructor
+        // Debes reemplazar "Ruta/A_Enemigo_Comun_BP.A_Enemigo_Comun_BP_C'" con la ruta real de tu Blueprint.
+        // Para obtener la ruta exacta: en el Content Browser, haz clic derecho en tu Blueprint de enemigo y selecciona "Copy Reference".
+        static ConstructorHelpers::FObjectFinder<UClass> EnemigoBPClassFinder(TEXT("Class'/Game/Kronos_GHS/Mesh/Basic/Enemigo_Comun.Enemigo_Comun_C'"));
+        // Ejemplo de ruta: "Class'/Game/TuCarpeta/TuBlueprintDeEnemigo.TuBlueprintDeEnemigo_C'"
+
+        if (EnemigoBPClassFinder.Succeeded())
+        {
+            EnemigoBlueprintToSpawn = EnemigoBPClassFinder.Object;
+            UE_LOG(LogTemp, Log, TEXT("Blueprint de enemigo cargado exitosamente."));
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("No se pudo encontrar el Blueprint de enemigo en la ruta especificada."));
+        }
 
 }
 
@@ -43,32 +60,42 @@ void AGenerador_Enemigos::Tick(float DeltaTime)
 
 void AGenerador_Enemigos::SpawnEnemy()
 {
-	FVector SpawnLocation = GetActorLocation();
-	SpawnLocation.Z += 100.0f;
-	FRotator SpawnRotation = GetActorRotation();
+    FVector SpawnLocation = GetActorLocation();
+    SpawnLocation.Z += 100.0f;
+    FRotator SpawnRotation = GetActorRotation();
 
-	AEnemigo_Comun* SpawnedEnemy = GetWorld()->SpawnActor<AEnemigo_Comun>(AEnemigo_Comun::StaticClass(), SpawnLocation, SpawnRotation);
+    // Usa EnemigoBlueprintToSpawn si se cargó correctamente
+    if (EnemigoBlueprintToSpawn)
+    {
+        AEnemigo_Comun* SpawnedEnemy = GetWorld()->SpawnActor<AEnemigo_Comun>(EnemigoBlueprintToSpawn, SpawnLocation, SpawnRotation);
 
-	if (!SpawnedEnemy)
-	{
-		return;
-	}
+        if (!SpawnedEnemy)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("No se pudo spawnear el enemigo. Posiblemente por problemas de colision o Blueprint no valido."));
+            return;
+        }
 
-	cont_Enemigos++;
+        cont_Enemigos++;
 
-	if (cont_Enemigos >= 3)
-	{
-		UCharacterMovementComponent* Movement = SpawnedEnemy->GetCharacterMovement();
-		if (Movement)
-		{
-			Movement->MaxWalkSpeed = 400.0f;
-		}
-		else
-		{
-			return; // No se pudo obtener el componente de movimiento del enemigo
-		}
-	}
+        if (cont_Enemigos >= 3)
+        {
+            UCharacterMovementComponent* Movement = SpawnedEnemy->GetCharacterMovement();
+            if (Movement)
+            {
+                Movement->MaxWalkSpeed = 400.0f;
+            }
+            else
+            {
+                // Log si el enemigo spawneado no tiene un CharacterMovementComponent
+                UE_LOG(LogTemp, Warning, TEXT("El enemigo spawneado no tiene un CharacterMovementComponent. No se pudo cambiar la velocidad."));
+                return;
+            }
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("El Blueprint de enemigo no se pudo cargar. Asegúrate de que la ruta en el constructor es correcta."));
+    }
 }
-
 
 
