@@ -266,7 +266,7 @@ void AWorld2_Factory::CreateBlocks(TArray<TArray<int32>> FullMap, int32 Altura)
 			case 2:
 				if (FabricaBloques)
 				{
-					FabricaBloques->CrearBloque("BloqueMadera", Posicion);
+					FabricaBloques->CrearBloque("BloqueMadera2", Posicion);
 				}
 				break;
 
@@ -280,7 +280,7 @@ void AWorld2_Factory::CreateBlocks(TArray<TArray<int32>> FullMap, int32 Altura)
 			case 4:
 				if (FabricaBloques)
 				{
-					FabricaBloques->CrearBloque("BloquePiedra", Posicion);
+					FabricaBloques->CrearBloque("BloquePiedra2", Posicion);
 				}
 				break;
 			case 5:

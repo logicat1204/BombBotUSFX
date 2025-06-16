@@ -23,6 +23,9 @@
 //Para modificar el score usamos nuestro character
 #include "BombBotCharacter.h"
 
+//Para hacer danio al jefe final (a su hitbox)
+#include "BombBot/Jefe1/HitboxJefe.h"
+
 // Sets default values
 AExplosion::AExplosion()
 {
@@ -137,6 +140,11 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
             OtraBomba->Destroy();
             Destroy();
         }
+		if (AHitboxJefe* Jefe = Cast<AHitboxJefe>(OtherActor))
+		{
+			Jefe->Destroy(); // Destruir la hitbox para simular el danio al jefe y luego spawnea otra
+			AddScoreForExplosion(200); // Aumenta el puntaje por daniar al jefe
+		}
     }
 }
 
