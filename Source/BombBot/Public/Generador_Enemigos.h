@@ -28,7 +28,7 @@ public:
 	void SpawnEnemy();// Funcion para generar enemigos
 
 	FTimerHandle TimerHandle_EnemySpawn; //Ter para controlar el spawn de enemigos
-	float SpawnInterval = 10.0f; // Intervalo de tiempo entre spawns
-	float PreSpawnTime = 20.f; // Tiempo de pre-spawn antes de que el enemigo aparezca
+	float SpawnInterval = 5.0f; // Intervalo de tiempo entre spawns
+	float PreSpawnTime = 5.f; // Tiempo de pre-spawn antes de que el enemigo aparezca
 	float cont_Enemigos = 0;
 };

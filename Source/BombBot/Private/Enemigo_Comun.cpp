@@ -15,6 +15,7 @@
 #include "Engine/World.h"
 #include "Engine/Engine.h"
 #include "BombBotCharacter.h"
+#include "PowerUps_Factory.h"
 
 AEnemigo_Comun::AEnemigo_Comun()
 {
@@ -114,6 +115,25 @@ void AEnemigo_Comun::Tick(float DeltaTime)
         bEsperando = true;
         GetWorldTimerManager().SetTimer(TimerEspera, this, &AEnemigo_Comun::IrAlSiguientePunto, TiempoEspera, false);
     }
+}
+
+void AEnemigo_Comun::KillEnemigo()
+{
+    ProbabilidadSpawnPowerUp = FMath::RandRange(0.0f, 1.0f);
+
+    if (ProbabilidadSpawnPowerUp < 0.5f) // 20% de probabilidad
+    {
+        APowerUps_Factory* PowerUpFactory = GetWorld()->SpawnActor<APowerUps_Factory>(APowerUps_Factory::StaticClass());
+
+        if (PowerUpFactory)
+        {
+            int PowerUpIndex = FMath::RandRange(1, 3);
+            PowerUpFactory->CreatePowerUp(GetActorLocation(), PowerUpIndex);
+            PowerUpFactory->Destroy(); 
+        }
+    }
+
+    Destroy();  // Destruye el enemigo
 }
 
 

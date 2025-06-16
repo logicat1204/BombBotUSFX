@@ -364,6 +364,10 @@ void ABombBotCharacter::RecoverLives(int32 Amount)
 {
 	if (Amount <= 0) return;
 
+	if (LifeUI)
+	{
+		LifeUI->RecuperarVida();
+	}
 	CurrentLives += Amount;
 	if (CurrentLives > MaxLives)
 	{

@@ -129,8 +129,7 @@ void AExplosion::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
         }
         if (AEnemigo_Comun* Enemigo = Cast<AEnemigo_Comun>(OtherActor))
         {
-            Enemigo->Destroy();
-            //Destroy();
+            Enemigo->KillEnemigo();
             AddScoreForExplosion(100);
         }
         if (ALockSphere* OtraBomba = Cast<ALockSphere>(OtherActor))

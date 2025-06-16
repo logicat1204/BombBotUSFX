@@ -35,6 +35,10 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Vida")
     void ReducirVida();
 
+    // Función para recuperar vida
+    UFUNCTION(BlueprintCallable, Category = "Vida")
+    void RecuperarVida();
+
     //Funcion para reducir bombas
     UFUNCTION(BlueprintCallable, Category = "Bombas")
     void ReducirBombas();

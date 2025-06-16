@@ -27,13 +27,13 @@ bool APoweUp_Curacion::ActivatePowerUp(ABombBotCharacter* PlayerCharacter)
 
 	if (!PlayerCharacter)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PowerUp_Curacion: Intento de activación sin un personaje válido."));
+		UE_LOG(LogTemp, Warning, TEXT("PowerUp_Curacion: Intento de activacion sin un personaje valido."));
 		return false;
 	}
 
 	PlayerCharacter->RecoverLives(CantidadCuracion);
 
-	UE_LOG(LogTemp, Log, TEXT("PowerUp de curación activado para %s. Vidas recuperadas: %d"), *PlayerCharacter->GetName(), CantidadCuracion);
+	UE_LOG(LogTemp, Log, TEXT("PowerUp de curacion activado para %s. Vidas recuperadas: %d"), *PlayerCharacter->GetName(), CantidadCuracion);
 
 	return true;
 }
