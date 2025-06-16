@@ -2,6 +2,7 @@
 
 
 #include "BombBot/Jefe1/JefeFinal.h"
+#include "BombBot/Jefe1/HitboxJefe.h"
 
 // Sets default values
 AJefeFinal::AJefeFinal()
@@ -44,6 +45,7 @@ void AJefeFinal::BeginPlay()
 	{
 		MeshJefe->PlayAnimation(AnimJefeA, true);
 	}
+	SpawnHitBox();
 }
 
 // Called every frame
@@ -58,5 +60,34 @@ void AJefeFinal::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AJefeFinal::SpawnHitBox()
+{
+	//Patron Singleton para evitar múltiples instancias de HitboxJefe
+	if (HitboxJefe) return; // If HitboxJefe already exists, do not spawn a new one
+	HitboxJefe = GetWorld()->SpawnActor<AHitboxJefe>(AHitboxJefe::StaticClass(), GetActorLocation(), GetActorRotation());
+	if (HitboxJefe)
+	{
+		HitboxJefe->OnDestroyed.AddDynamic(this, &AJefeFinal::DestroyedHitbox);
+	}
+}
+
+void AJefeFinal::DestroyedHitbox()
+{
+	if (VidaTotal > 0)
+	{
+		VidaTotal--; // Decrease the boss's health when the hitbox is destroyed
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Vida del Jefe: %d"), VidaTotal));
+	}
+	if (HitboxJefe)
+	{
+		HitboxJefe->Destroy();
+		HitboxJefe = nullptr; // Clear the pointer to avoid dangling reference
+	}
+	// Optionally, you can respawn the hitbox after a delay or based on some condition
+	if (VidaTotal <= 0) return; // If the boss is defeated, do not respawn the hitbox
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AJefeFinal::SpawnHitBox, 5.0f, false); // Respawn after 5 seconds
 }
 

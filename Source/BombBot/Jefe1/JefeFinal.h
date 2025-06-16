@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "JefeFinal.generated.h"
 
+class AHitboxJefe;
+
 UCLASS()
 class BOMBBOT_API AJefeFinal : public APawn
 {
@@ -16,9 +18,14 @@ public:
 	AJefeFinal();
 	USkeletalMeshComponent* MeshJefe;
 	UAnimationAsset* AnimJefeA;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "JefeFinal")
+	AHitboxJefe* HitboxJefe;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	int32 VidaTotal = 15;
 
 public:	
 	// Called every frame
@@ -26,5 +33,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	void SpawnHitBox();
+	UFUNCTION()
+	void DestroyedHitbox();
 };
