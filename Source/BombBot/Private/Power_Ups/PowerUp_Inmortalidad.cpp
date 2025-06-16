@@ -16,6 +16,8 @@ APowerUp_Inmortalidad::APowerUp_Inmortalidad()
     {
         MallaPowerUp->SetStaticMesh(ObjetoMallaP.Object);
         //MallaPowerUp->SetWorldScale3D(FVector(2.0f, 2.0f, 2.0f));
+        // Desactivar colisión completamente
+        MallaPowerUp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
     }
 }
 
