@@ -39,4 +39,8 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	//Funcion para matar al enemigo y spawn de power ups
+	void KillEnemigo();
+	float ProbabilidadSpawnPowerUp;
 };

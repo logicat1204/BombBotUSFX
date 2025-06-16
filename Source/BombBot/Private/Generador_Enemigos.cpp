@@ -44,13 +44,31 @@ void AGenerador_Enemigos::Tick(float DeltaTime)
 void AGenerador_Enemigos::SpawnEnemy()
 {
 	FVector SpawnLocation = GetActorLocation();
-	SpawnLocation.Z += 100.0f; // Ajustar la altura de aparición del enemigo
+	SpawnLocation.Z += 100.0f;
 	FRotator SpawnRotation = GetActorRotation();
+
 	AEnemigo_Comun* SpawnedEnemy = GetWorld()->SpawnActor<AEnemigo_Comun>(AEnemigo_Comun::StaticClass(), SpawnLocation, SpawnRotation);
+
+	if (!SpawnedEnemy)
+	{
+		return;
+	}
+
 	cont_Enemigos++;
-	if (cont_Enemigos >= 3) {
-		SpawnedEnemy->GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-        // Al inicio del archivo, agrega el include necesario para el componente de movimiento de personaje
+
+	if (cont_Enemigos >= 3)
+	{
+		UCharacterMovementComponent* Movement = SpawnedEnemy->GetCharacterMovement();
+		if (Movement)
+		{
+			Movement->MaxWalkSpeed = 400.0f;
+		}
+		else
+		{
+			return; // No se pudo obtener el componente de movimiento del enemigo
+		}
 	}
 }
+
+
 
