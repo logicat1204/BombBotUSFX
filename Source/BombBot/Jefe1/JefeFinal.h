@@ -35,5 +35,11 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void SpawnHitBox();
 	UFUNCTION()
-	void DestroyedHitbox();
+	void DestroyedHitbox(AActor* DestroyedActor);
+
+	//implementacion de un patron facade y sus metodos para el danio al jugador
+//Tres formas de atacar
+// disparando esferas pequenias hacia el jugador
+//Spawneando esbirros que atacan al jugador
+//Lanzando escombros encima del jugador que caen y si tocan algo se destruyen, si tocan al jugador le hacen danio
 };

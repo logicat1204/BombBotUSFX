@@ -66,14 +66,14 @@ void AJefeFinal::SpawnHitBox()
 {
 	//Patron Singleton para evitar múltiples instancias de HitboxJefe
 	if (HitboxJefe) return; // If HitboxJefe already exists, do not spawn a new one
-	HitboxJefe = GetWorld()->SpawnActor<AHitboxJefe>(AHitboxJefe::StaticClass(), GetActorLocation(), GetActorRotation());
+	HitboxJefe = GetWorld()->SpawnActor<AHitboxJefe>(AHitboxJefe::StaticClass(), GetActorLocation()+FVector(0.0f,0.0f,-300.0f), GetActorRotation());
 	if (HitboxJefe)
 	{
 		HitboxJefe->OnDestroyed.AddDynamic(this, &AJefeFinal::DestroyedHitbox);
 	}
 }
 
-void AJefeFinal::DestroyedHitbox()
+void AJefeFinal::DestroyedHitbox(AActor* DestroyedActor)
 {
 	if (VidaTotal > 0)
 	{
@@ -82,7 +82,6 @@ void AJefeFinal::DestroyedHitbox()
 	}
 	if (HitboxJefe)
 	{
-		HitboxJefe->Destroy();
 		HitboxJefe = nullptr; // Clear the pointer to avoid dangling reference
 	}
 	// Optionally, you can respawn the hitbox after a delay or based on some condition

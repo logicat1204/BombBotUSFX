@@ -14,7 +14,7 @@ AHitboxJefe::AHitboxJefe()
 	if (HitboxMeshAsset.Succeeded())
 	{
 		HitboxJefeMesh->SetStaticMesh(HitboxMeshAsset.Object);
-		HitboxJefeMesh->SetVisibility(false);
+		HitboxJefeMesh->SetVisibility(true);
 	}
 	HitboxJefeMesh->SetRelativeScale3D(FVector(1.f, 1.f, 2.5f));
 }

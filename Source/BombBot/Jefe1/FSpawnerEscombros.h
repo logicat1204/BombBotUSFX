@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "HitboxJefe.generated.h"
+#include "FSpawnerEscombros.generated.h"
 
 UCLASS()
-class BOMBBOT_API AHitboxJefe : public AActor
+class BOMBBOT_API AFSpawnerEscombros : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AHitboxJefe();
-	UStaticMeshComponent* HitboxJefeMesh;
+	AFSpawnerEscombros();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,4 +22,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 };
