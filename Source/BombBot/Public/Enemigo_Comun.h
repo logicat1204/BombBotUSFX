@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Enemigos/Enemigo.h"
+#include "Components/BoxComponent.h"
 #include "Enemigo_Comun.generated.h"
 
 /**
@@ -32,11 +33,17 @@ protected:
 	static void ReiniciarDeteccion(UWorld* World);
 
 	UFUNCTION()
-	void OnOverlapJugador(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
-		bool bFromSweep, const FHitResult& SweepResult);
+    void OnHitJugador(UPrimitiveComponent* HitComp, AActor* OtherActor,
+                      UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+    UFUNCTION()
+    void OnAttackBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+                            UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+
 
 public:
+    
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* AttackCollisionBox;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	

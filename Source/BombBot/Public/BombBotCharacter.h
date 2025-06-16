@@ -62,6 +62,11 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+    
+    UFUNCTION()
+    void OnHitJugador(UPrimitiveComponent* HitComp, AActor* OtherActor,
+                      UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+    
 protected:
 
 	/** Called for movement input */
