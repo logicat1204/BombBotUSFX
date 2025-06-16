@@ -104,4 +104,3 @@ void ABloqueGeneral::Impactar()
         durabilidad--;
     }
 }
-

@@ -12,6 +12,7 @@ class BOMBBOT_API AWorld1_FactoryBloques : public AFactoryBloques
 	GENERATED_BODY()
 	
 public:	
-	void CrearBloque(FString TypeBlock, FVector Position);
-
+	AActor* CrearBloque(FString TypeBlock, FVector Position);
+	
+	AActor* Bloque;
 };

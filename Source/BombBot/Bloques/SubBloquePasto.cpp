@@ -7,7 +7,7 @@ ASubBloquePasto::ASubBloquePasto()
 {
     if (MeshComp)
     {
-        static ConstructorHelpers::FObjectFinder<UMaterial> MaterialBase(TEXT("/Script/Engine.Material'/Game/LevelPrototyping/Materials/Level1/Grass008_2K-PNG/M_Grass2.M_Grass2'"));
+        static ConstructorHelpers::FObjectFinder<UMaterial> MaterialBase(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/Bloques_Nuevos/GRASS_BLOCK.GRASS_BLOCK'"));
 
         if (MaterialBase.Succeeded())
         {

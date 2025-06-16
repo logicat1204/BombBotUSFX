@@ -5,18 +5,15 @@
 #include "BombBot/Bloques/SubBloquePasto.h"
 ABloque_Pasto::ABloque_Pasto()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
-    if (MallaBloque)
+    // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+    PrimaryActorTick.bCanEverTick = true;
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> MallaHija(TEXT("/Script/Engine.StaticMesh'/Game/AlvaroAssets/Bloques_Nuevos/Sin_nombre.Sin_nombre'"));
+    if (MallaHija.Succeeded())
     {
-        static ConstructorHelpers::FObjectFinder<UMaterial> MaterialBase(TEXT("/Script/Engine.Material'/Game/LevelPrototyping/Materials/Level1/Grass008_2K-PNG/M_Grass2.M_Grass2'"));
-
-        if (MaterialBase.Succeeded())
-        {
-            MallaBloque->SetMaterial(0, MaterialBase.Object);
-        }
+        MallaBloque->SetStaticMesh(MallaHija.Object);
+		MallaBloque->SetWorldScale3D(FVector(0.53f, 0.53f, 0.53f));
     }
+  
 }
 
 void ABloque_Pasto::DestruirBloque()

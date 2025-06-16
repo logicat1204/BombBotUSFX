@@ -62,6 +62,11 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+    
+    UFUNCTION()
+    void OnHitJugador(UPrimitiveComponent* HitComp, AActor* OtherActor,
+                      UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+    
 protected:
 
 	/** Called for movement input */
@@ -217,5 +222,15 @@ private:
 	private:
 	void Flash(const FInputActionValue& Value);
 
+	int32 Meta = 2;
 
+	int32 Personas = 0;
+
+	public:
+	// metodo para abrir puerta de escape
+	void OpenEscapeDoor();
+
+	class AWorld1_Factory* FabricaW1;
+
+	void setFabrica(AWorld1_Factory* NuevaFabrica);
 };

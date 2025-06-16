@@ -17,7 +17,7 @@
 #include "Bomba/Bomba.h"
 #include "BombBotGameInstance.h"
 #include "Components/SpotLightComponent.h"
-
+#include "World1_Factory.h"
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
@@ -79,6 +79,14 @@ ABombBotCharacter::ABombBotCharacter()
 	Flashlight->SetOuterConeAngle(40.0f);
 	Flashlight->SetVisibility(true);
 	Flashlight->SetAttenuationRadius(MaxFlashlightDistance);
+    
+    // En el constructor o BeginPlay, suscribe la funci—n al evento OnComponentHit
+    // El CapsuleComponent es el componente ra’z de ACharacter por defecto
+    GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &ABombBotCharacter::OnHitJugador);
+
+    // Asegœrate de que tu CapsuleComponent estŽ configurado para generar eventos de hit
+    // Esto se puede hacer en el editor o en C++:
+    GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -393,6 +401,14 @@ void ABombBotCharacter::RecoverLives(int32 Amount)
 void ABombBotCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+    
+//    //Dibujar la capsula
+//    DrawDebugCapsule(GetWorld(), GetCapsuleComponent()->GetComponentLocation(),
+//                     GetCapsuleComponent()->GetScaledCapsuleHalfHeight(),
+//                     GetCapsuleComponent()->GetScaledCapsuleRadius(),
+//                     GetCapsuleComponent()->GetComponentQuat(),
+//                     FColor::Green, false, 0.1f, 0, 2.0f);
+    
 	DetectCloseBomb();
 
 	//Linterna
@@ -677,4 +693,48 @@ void ABombBotCharacter::Flash(const FInputActionValue& Value)
 	else {
 		Flashlight->ToggleVisibility();
 	}
+}
+
+void ABombBotCharacter::setFabrica(AWorld1_Factory* NuevaFabrica)
+{
+	
+	FabricaW1 = NuevaFabrica;
+}
+
+void ABombBotCharacter::OpenEscapeDoor()
+{
+	if (!FabricaW1) return;
+	if (Personas == Meta) {
+		FabricaW1->CreateExit();
+	}
+	else {
+		// llamar metodo para destruir el bloque puerta
+		Personas++;
+	}
+}
+
+void ABombBotCharacter::OnHitJugador(UPrimitiveComponent* HitComp, AActor* OtherActor,
+    UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+    if (OtherActor && OtherActor == this)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("El enemigo toco al jugador!"));
+
+        // Intentar castear el OtherActor a tu clase de personaje
+        ABombBotCharacter* PlayerCharacter = Cast<ABombBotCharacter>(OtherActor);
+
+        if (PlayerCharacter)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Enemigo toco a: %s"), *PlayerCharacter->GetName());
+            // Llamar a la función para que el jugador pierda una vida
+            this->TakeDamageAndLoseLife();
+
+            // Aquí podrías anadir logica adicional para el enemigo, como:
+            // - Destruirse a si mismo después de dañar al jugador: Destroy();
+            // - Desactivar su colisión por un tiempo para no dañar repetidamente:
+            //   CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+            //   FTimerHandle TempTimer;
+            //   GetWorldTimerManager().SetTimer(TempTimer, [this]() { if(CollisionComp) CollisionComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly); }, 2.0f, false);
+        }
+    }
 }
