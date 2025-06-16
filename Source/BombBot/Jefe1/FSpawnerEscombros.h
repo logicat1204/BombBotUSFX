@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "FSpawnerEscombros.generated.h"
 
+class ABombBotCharacter;
 UCLASS()
 class BOMBBOT_API AFSpawnerEscombros : public AActor
 {
@@ -18,9 +19,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	ABombBotCharacter* Player;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	void AtacarES(int32 CantDisparos);
+	void SpawnAtack();
 };

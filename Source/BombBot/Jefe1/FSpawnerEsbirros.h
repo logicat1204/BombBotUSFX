@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "FSpawnerEsbirros.generated.h"
 
+class AEnemigo_Comun;
 UCLASS()
 class BOMBBOT_API AFSpawnerEsbirros : public AActor
 {
@@ -22,5 +23,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void SpawnEsbirros(int32 cant);
+	void SpawnEsbirro();
 
+	// **NUEVO:** Variable privada para almacenar la clase Blueprint cargada
+	UPROPERTY(EditDefaultsOnly, Category = "Enemigos")
+	TSubclassOf<AEnemigo_Comun> EnemigoBlueprintToSpawn;
 };

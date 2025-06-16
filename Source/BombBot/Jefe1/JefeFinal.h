@@ -7,7 +7,9 @@
 #include "JefeFinal.generated.h"
 
 class AHitboxJefe;
-
+class AFSpawnerDisparos;
+class AFSpawnerEscombros;
+class AFSpawnerEsbirros;
 UCLASS()
 class BOMBBOT_API AJefeFinal : public APawn
 {
@@ -27,6 +29,15 @@ protected:
 
 	int32 VidaTotal = 15;
 
+	int32 Decision; // 1) Disparos, 2) Escombros, 3) Esbirros
+	AFSpawnerDisparos* SpawnerDisparos;
+	int32 AttackNums = 3; // Numero de ataques que se realizaran
+
+	AFSpawnerEscombros* SpawnerEscombros;
+	int32 EscombrosAttacks = 3;
+
+	AFSpawnerEsbirros* SpawnerEsbirros;
+	int32 CantEsbirros = 1;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -37,6 +48,18 @@ public:
 	UFUNCTION()
 	void DestroyedHitbox(AActor* DestroyedActor);
 
+	void AsignSpawnerDisparos();
+	void SpawnSpawnerDisparos();
+
+	void AsignSpawnerEscombros();
+	void AttackEscombros();
+
+	void AssignSpawnerEsbirros();
+	void SummonEsbirros();
+
+	void DecidirAtaque();
+
+	void DeathEffect();
 	//implementacion de un patron facade y sus metodos para el danio al jugador
 //Tres formas de atacar
 // disparando esferas pequenias hacia el jugador

@@ -4,19 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
-#include "Engine/Engine.h"
-#include "FDisparo.generated.h"
+#include "FEscombro.generated.h"
+
 class ABombBotCharacter;
 UCLASS()
-class BOMBBOT_API AFDisparo : public AActor
+class BOMBBOT_API AFEscombro : public AActor
 {
 	GENERATED_BODY()
-
 public:
-	// Sets default values for this actor's properties
-	AFDisparo();
-
+	AFEscombro();
 	float RangoDeImpacto = 100.0f;
 	ABombBotCharacter* Jugador;
 
