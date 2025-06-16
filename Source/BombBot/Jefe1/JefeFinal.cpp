@@ -64,13 +64,13 @@ void AJefeFinal::Tick(float DeltaTime)
 	{
 		AttackNums = 5; // Increase the number of attacks when health reaches 10
 		EscombrosAttacks = 4; // Increase the number of debris attacks when health reaches 10
-		CantEsbirros = 2; // Increase the number of minions when health reaches 10
+		CantEsbirros = 4; // Increase the number of minions when health reaches 10
 	}
 	if (VidaTotal == 5)
 	{
 		AttackNums = 7; // Increase the number of attacks when health reaches 5
 		EscombrosAttacks = 5; // Increase the number of debris attacks when health reaches 5
-		CantEsbirros = 3; // Increase the number of minions when health reaches 5
+		CantEsbirros = 6; // Increase the number of minions when health reaches 5
 	}
 	if (VidaTotal == 0)
 	{
@@ -135,7 +135,7 @@ void AJefeFinal::AsignSpawnerDisparos()
 	SpawnerDisparos = GetWorld()->SpawnActor<AFSpawnerDisparos>(AFSpawnerDisparos::StaticClass(), GetActorLocation(), GetActorRotation());
 	if (SpawnerDisparos)
 	{
-		SpawnerDisparos->SetActorLocation(GetActorLocation() + FVector(0.0f, 0.0f, 100.0f)); // Adjust the spawn location if needed
+		SpawnerDisparos->SetActorLocation(GetActorLocation() + FVector(0.0f, 0.0f, 20.0f)); // Adjust the spawn location if needed
 	}
 	else
 	{
@@ -218,12 +218,12 @@ void AJefeFinal::DecidirAtaque()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Decisión de ataque inválida"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Decision de ataque invalida"));
 	}
 }
 
 void AJefeFinal::DeathEffect()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("¡El Jefe ha sido derrotado!"));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("El Jefe ha sido derrotado"));
 }
 
