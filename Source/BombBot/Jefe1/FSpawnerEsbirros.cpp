@@ -76,7 +76,7 @@ void AFSpawnerEsbirros::SpawnEsbirro()
     }
     else
     {
-        UE_LOG(LogTemp, Error, TEXT("El Blueprint de enemigo no se pudo cargar. Asegúrate de que la ruta en el constructor es correcta."));
+        UE_LOG(LogTemp, Error, TEXT("El Blueprint de enemigo no se pudo cargar. Asegurate de que la ruta en el constructor es correcta."));
     }
 }
 

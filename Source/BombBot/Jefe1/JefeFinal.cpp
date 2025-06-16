@@ -218,12 +218,12 @@ void AJefeFinal::DecidirAtaque()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Decisión de ataque inválida"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Decision de ataque invalida"));
 	}
 }
 
 void AJefeFinal::DeathEffect()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("¡El Jefe ha sido derrotado!"));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("El Jefe ha sido derrotado"));
 }
 
