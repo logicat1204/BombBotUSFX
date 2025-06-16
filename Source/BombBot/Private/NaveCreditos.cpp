@@ -16,19 +16,16 @@ ANaveCreditos::ANaveCreditos() // <--- CORREGIDO: APoweUp a APowerUp
 	PrimaryActorTick.bCanEverTick = true;
 
 	PowerUpCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("PowerUpCollision"));
-	PowerUpCollision->SetRelativeScale3D(FVector(50.f,50.f,50.f));
+    PowerUpCollision->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
 	RootComponent = PowerUpCollision; // <--- MEJORA: Usar RootComponent en vez de SetRootComponent en el constructor es la práctica moderna.
 
 	PowerUpMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PowerUpMesh"));
 	PowerUpMesh->SetupAttachment(RootComponent); // <--- MEJORA: Adjuntar al RootComponent es más claro.
-	PowerUpMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MallaPowerUp"));
-	PowerUpMesh->SetupAttachment(RootComponent);
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ObjetoMallaP(TEXT("/Script/Engine.StaticMesh'/Game/AlvaroAssets/Nave_Espacial/Modelo_Nave_Espacial.Modelo_Nave_Espacial'"));
 
 	if (ObjetoMallaP.Succeeded())
 	{
 		PowerUpMesh->SetStaticMesh(ObjetoMallaP.Object);
-		PowerUpMesh->SetWorldScale3D(FVector(0.05f, 0.05f, 0.05f));
 		// Desactivar colisión completamente
 		PowerUpMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
