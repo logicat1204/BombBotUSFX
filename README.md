@@ -255,7 +255,7 @@ Este enfoque abstrae completamente la lógica de creación de power-ups. La clas
 
 ### Conclusión
 
-La aplicación de los patrones **Builder**, **Abstract Factory** y **Factory Method** en el proyecto *BombBot* ha sido clave para lograr una arquitectura robusta, modular y extensible.
+Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y **Factory Method** en nuestro proyecto *BombBot* que ha sido clave para lograr una arquitectura robusta, modular y extensible.
 
 - **Builder Pattern**: Permite la construcción paso a paso de niveles complejos, posibilitando que cada "mundo" tenga una configuración única sin modificar la lógica central del flujo de creación.
   
@@ -264,3 +264,15 @@ La aplicación de los patrones **Builder**, **Abstract Factory** y **Factory Met
 - **Factory Method Pattern**: Facilita la creación específica de tipos de bloques y power-ups mediante métodos parametrizados, aislando el código cliente de las decisiones de instanciación concretas.
 
 En conjunto, estos patrones no solo mejoran la mantenibilidad y escalabilidad del código, sino que también sientan las bases para futuras expansiones del juego, como la incorporación de nuevos mundos, enemigos, o mecánicas de juego, con un mínimo impacto en el código existente.
+
+
+## Creditos
+Trabajo realizado por:
+- Arancibia Estrada Alvaro David.
+- Mollinedo Siles Renzo Sebastián.
+- Quispe Ticona Josias Asael.
+- Magne Ordoñez Pedro Jhoel Antonio.
+- Cornejo Moscoso Gabriel Orlando.
+
+### SIS 457 - Programacion Avanzada
+
