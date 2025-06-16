@@ -135,7 +135,7 @@ void AJefeFinal::AsignSpawnerDisparos()
 	SpawnerDisparos = GetWorld()->SpawnActor<AFSpawnerDisparos>(AFSpawnerDisparos::StaticClass(), GetActorLocation(), GetActorRotation());
 	if (SpawnerDisparos)
 	{
-		SpawnerDisparos->SetActorLocation(GetActorLocation() + FVector(0.0f, 0.0f, 100.0f)); // Adjust the spawn location if needed
+		SpawnerDisparos->SetActorLocation(GetActorLocation() + FVector(0.0f, 0.0f, 20.0f)); // Adjust the spawn location if needed
 	}
 	else
 	{

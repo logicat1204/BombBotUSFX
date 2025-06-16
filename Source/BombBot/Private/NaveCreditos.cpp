@@ -61,6 +61,6 @@ void ANaveCreditos::NotifyActorBeginOverlap(AActor* OtherActor)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No hay siguiente nivel o el nivel actual no está en la lista."));
+		UE_LOG(LogTemp, Warning, TEXT("No hay siguiente nivel o el nivel actual no esta en la lista."));
 	}
 }
