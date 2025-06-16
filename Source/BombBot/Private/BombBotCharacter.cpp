@@ -402,12 +402,12 @@ void ABombBotCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     
-    //Dibujar la capsula
-    DrawDebugCapsule(GetWorld(), GetCapsuleComponent()->GetComponentLocation(),
-                     GetCapsuleComponent()->GetScaledCapsuleHalfHeight(),
-                     GetCapsuleComponent()->GetScaledCapsuleRadius(),
-                     GetCapsuleComponent()->GetComponentQuat(),
-                     FColor::Green, false, 0.1f, 0, 2.0f);
+//    //Dibujar la capsula
+//    DrawDebugCapsule(GetWorld(), GetCapsuleComponent()->GetComponentLocation(),
+//                     GetCapsuleComponent()->GetScaledCapsuleHalfHeight(),
+//                     GetCapsuleComponent()->GetScaledCapsuleRadius(),
+//                     GetCapsuleComponent()->GetComponentQuat(),
+//                     FColor::Green, false, 0.1f, 0, 2.0f);
     
 	DetectCloseBomb();
 

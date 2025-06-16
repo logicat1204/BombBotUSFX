@@ -108,11 +108,11 @@ void AEnemigo_Comun::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     //Dibujar la capsula del enemigo
-    DrawDebugCapsule(GetWorld(), GetCapsuleComponent()->GetComponentLocation(),
-                     GetCapsuleComponent()->GetScaledCapsuleHalfHeight(),
-                     GetCapsuleComponent()->GetScaledCapsuleRadius(),
-                     GetCapsuleComponent()->GetComponentQuat(),
-                     FColor::Green, false, 0.1f, 0, 2.0f);
+//    DrawDebugCapsule(GetWorld(), GetCapsuleComponent()->GetComponentLocation(),
+//                     GetCapsuleComponent()->GetScaledCapsuleHalfHeight(),
+//                     GetCapsuleComponent()->GetScaledCapsuleRadius(),
+//                     GetCapsuleComponent()->GetComponentQuat(),
+//                     FColor::Green, false, 0.1f, 0, 2.0f);
     
     USkeletalMeshComponent* CharacterMesh = GetMesh();
     if (CharacterMesh)
