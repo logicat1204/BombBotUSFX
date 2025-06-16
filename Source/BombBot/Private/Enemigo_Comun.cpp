@@ -143,9 +143,9 @@ void AEnemigo_Comun::Tick(float DeltaTime)
     const float RangoVision = 400.0f;
     const float AnguloVision = 30.0f;
     
-    DrawDebugCone(GetWorld(), GetActorLocation(), DireccionFrente, RangoVision,
-                  FMath::DegreesToRadians(AnguloVision), FMath::DegreesToRadians(AnguloVision),
-                  12, FColor::Yellow, false, -1.0f, 0, 1.0f);
+    //DrawDebugCone(GetWorld(), GetActorLocation(), DireccionFrente, RangoVision,
+                  //FMath::DegreesToRadians(AnguloVision), FMath::DegreesToRadians(AnguloVision),
+                  //12, FColor::Yellow, false, -1.0f, 0, 1.0f);
     
     // Si cualquier enemigo vio al jugador, o este lo está viendo
     if (bJugadorDetectado || (Distancia <= RangoVision && Angulo <= AnguloVision))

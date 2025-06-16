@@ -42,7 +42,7 @@ public:
 	TArray<FVector> Direcciones;
 	//segundos en los que explotara la bomba
 	FTimerHandle TH_Explosion;
-	float tiempo_explosion = 4.5f;
+	float tiempo_explosion = 2.5f;
 
 
 	void explotar();

@@ -64,7 +64,7 @@ ABombBotCharacter::ABombBotCharacter()
 	// --- INICIALIZACIÓN DE STATS ---
 	MaxLives = 3; // Ajustado a 3 vidas
 	CurrentLives = MaxLives;
-	RespawnDelay = 3.0f; // Por defecto 3 segundos de retraso, puedes cambiarlo en el Blueprint
+	RespawnDelay = 1.5f; // Por defecto 3 segundos de retraso, puedes cambiarlo en el Blueprint
 	// --- FIN DE INICIALIZACIÓN DE VIDAS ---
 
 	// Constructor
