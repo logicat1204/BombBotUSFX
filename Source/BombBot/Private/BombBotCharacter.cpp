@@ -17,7 +17,7 @@
 #include "Bomba/Bomba.h"
 #include "BombBotGameInstance.h"
 #include "Components/SpotLightComponent.h"
-
+#include "World1_Factory.h"
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
@@ -692,6 +692,24 @@ void ABombBotCharacter::Flash(const FInputActionValue& Value)
 	}
 	else {
 		Flashlight->ToggleVisibility();
+	}
+}
+
+void ABombBotCharacter::setFabrica(AWorld1_Factory* NuevaFabrica)
+{
+	
+	FabricaW1 = NuevaFabrica;
+}
+
+void ABombBotCharacter::OpenEscapeDoor()
+{
+	if (!FabricaW1) return;
+	if (Personas == Meta) {
+		FabricaW1->CreateExit();
+	}
+	else {
+		// llamar metodo para destruir el bloque puerta
+		Personas++;
 	}
 }
 

@@ -2,7 +2,8 @@
 
 
 #include "World1_Builder.h"
-
+#include <Kismet/GameplayStatics.h>
+#include "BombBotCharacter.h"
 // Sets default values
 AWorld1_Builder::AWorld1_Builder()
 {
@@ -17,6 +18,10 @@ void AWorld1_Builder::BeginPlay()
 	Super::BeginPlay();
 	//CREAMOS LA FABRICA DEL NIVEL
 	Factory = GetWorld()->SpawnActor<AWorld1_Factory>(AWorld1_Factory::StaticClass());
+	ABombBotCharacter* MiPersonaje = Cast<ABombBotCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (MiPersonaje) {
+	MiPersonaje->setFabrica(Factory);
+	}
 }
 
 // Called every frame
@@ -60,4 +65,5 @@ void AWorld1_Builder::BuildExit()
 {
 	Factory->CreateExit();
 }
+
 
