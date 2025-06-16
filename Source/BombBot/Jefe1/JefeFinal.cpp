@@ -17,12 +17,14 @@ AJefeFinal::AJefeFinal()
 		MeshJefe->SetRelativeLocation(FVector(0.0f,0.0f,0.0f));
 		MeshJefe->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 	}
-	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialJefe(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/FinalBoss/tentacle-robot/textures/Material_011_BaseColor_Mat.Material_011_BaseColor_Mat'"));
+	MeshJefe->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+	MeshJefe->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialJefe(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/FinalBoss/tentacle-robot/textures/M_JefeFinal.M_JefeFinal'"));
 	if (MaterialJefe.Succeeded())
 	{
 		MeshJefe->SetMaterial(0, MaterialJefe.Object);
 	}
-	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialJefe2(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/FinalBoss/tentacle-robot/textures/Material_011_BaseColor_Mat.Material_011_BaseColor_Mat'"));
+	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialJefe2(TEXT("/Script/Engine.Material'/Game/AlvaroAssets/FinalBoss/tentacle-robot/textures/M_JefeFinal.M_JefeFinal'"));
 	if (MaterialJefe2.Succeeded())
 	{
 		MeshJefe->SetMaterial(1, MaterialJefe2.Object);
@@ -30,7 +32,7 @@ AJefeFinal::AJefeFinal()
 	static ConstructorHelpers::FObjectFinder<UAnimationAsset> AnimJefe(TEXT("/Script/Engine.AnimSequence'/Game/AlvaroAssets/FinalBoss/tentacle-robot/source/Robot_export2_Anim.Robot_export2_Anim'"));
 	if (AnimJefe.Succeeded())
 	{
-		MeshJefe->PlayAnimation(AnimJefe.Object, true);
+		AnimJefeA = AnimJefe.Object;
 	}
 }
 
@@ -38,7 +40,10 @@ AJefeFinal::AJefeFinal()
 void AJefeFinal::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (AnimJefeA)
+	{
+		MeshJefe->PlayAnimation(AnimJefeA, true);
+	}
 }
 
 // Called every frame
