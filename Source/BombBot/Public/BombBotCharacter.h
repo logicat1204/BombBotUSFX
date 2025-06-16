@@ -47,6 +47,8 @@ class ABombBotCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	
+
 	// Controles personalizados:
 	/** Colocar bomba */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -200,4 +202,20 @@ private:
 	/** Handles para los temporizadores de los efectos. */
 	FTimerHandle TimerHandle_SpeedBoost;
 	FTimerHandle TimerHandle_Immortality;
+	public:
+	//Linterna
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Flashlight")
+	class USpotLightComponent* Flashlight;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	UInputAction* TurnFlashlightAction;
+
+	// Alcance máximo de la linterna
+	UPROPERTY(EditAnywhere, Category = "Linterna")
+	float MaxFlashlightDistance = 500.0f;
+
+	private:
+	void Flash(const FInputActionValue& Value);
+
+
 };

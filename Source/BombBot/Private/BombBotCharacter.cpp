@@ -16,6 +16,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Bomba/Bomba.h"
 #include "BombBotGameInstance.h"
+#include "Components/SpotLightComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -69,6 +70,15 @@ ABombBotCharacter::ABombBotCharacter()
 	// Constructor
 	bIsImmortal = false;
 
+	//Linterna
+	Flashlight = CreateDefaultSubobject<USpotLightComponent>(TEXT("Flashlight"));
+	Flashlight->SetupAttachment(RootComponent);  // O GetMesh(), según prefieras
+	Flashlight->SetRelativeLocation(FVector(50.f, 0.f, 60.f));
+	Flashlight->SetIntensity(80000.0f);
+	Flashlight->SetInnerConeAngle(20.0f);
+	Flashlight->SetOuterConeAngle(40.0f);
+	Flashlight->SetVisibility(true);
+	Flashlight->SetAttenuationRadius(MaxFlashlightDistance);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -122,6 +132,9 @@ void ABombBotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		// Colocar bomba
 		// Controles creados
 		// Colocar Bomba
+
+		//Colocamos Started para que solo lea la primera vez que se presiona el boton
+		EnhancedInputComponent->BindAction(TurnFlashlightAction, ETriggerEvent::Started, this, &ABombBotCharacter::Flash);
 
 		if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 		{
@@ -381,6 +394,24 @@ void ABombBotCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	DetectCloseBomb();
+
+	//Linterna
+	 // Trazar hacia donde apunta la linterna
+	FVector Start = Flashlight->GetComponentLocation();
+	FVector End = Start + Flashlight->GetForwardVector() * MaxFlashlightDistance;
+
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this); // Ignora al personaje
+
+	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params);
+
+	float FinalDistance = MaxFlashlightDistance;
+
+	if (bHit)
+	{
+		FinalDistance = (Hit.Location - Start).Size();
+	}
 }
 
 void ABombBotCharacter::ColocarBomba()
@@ -635,4 +666,15 @@ void ABombBotCharacter::DeactivateImmortality()
 {
 	// Simplemente llamamos a la función que ya tenías para desactivar el estado.
 	SetImmortality(false);
+}
+
+//Linterna
+void ABombBotCharacter::Flash(const FInputActionValue& Value)
+{
+	if (Value.Get<bool>()) {
+		Flashlight->ToggleVisibility();
+	}
+	else {
+		Flashlight->ToggleVisibility();
+	}
 }
