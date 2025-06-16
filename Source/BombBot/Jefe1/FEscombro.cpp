@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "BombBot/Jefe1/FDisparo.h"
-#include "BombBotCharacter.h"
+
+#include "BombBot/Jefe1/FEscombro.h"
 #include "Kismet/GameplayStatics.h"
+#include "BombBotCharacter.h"
 
 // Sets default values
-AFDisparo::AFDisparo()
+AFEscombro::AFEscombro()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -21,7 +22,7 @@ AFDisparo::AFDisparo()
 	// Desactivar gravedad para proyectiles
 	MallaDisparo->SetEnableGravity(false);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("/Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'"));
 	if (MeshAsset.Succeeded())
 	{
 		MallaDisparo->SetStaticMesh(MeshAsset.Object);
@@ -34,21 +35,22 @@ AFDisparo::AFDisparo()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No se pudo cargar el mesh de disparo"));
 	}
-	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialAsset(TEXT("/Script/Engine.Material'/Game/StarterContent/Materials/M_Tech_Hex_Tile_Pulse.M_Tech_Hex_Tile_Pulse'"));
-	if (MaterialAsset.Succeeded())
+	static ConstructorHelpers::FObjectFinder<UMaterial> MaterialEsc(TEXT("/Script/Engine.Material'/Game/StarterContent/Materials/M_Rock_Sandstone.M_Rock_Sandstone'"));
+	if (MaterialEsc.Succeeded())
 	{
-		MallaDisparo->SetMaterial(0, MaterialAsset.Object);
+		MallaDisparo->SetMaterial(0, MaterialEsc.Object);
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No se pudo cargar el material de disparo"));
 	}
+	
 	// Inicializar la posición objetivo
 	PosicionObjetivo = FVector::ZeroVector;
 }
 
 // Called when the game starts or when spawned
-void AFDisparo::BeginPlay()
+void AFEscombro::BeginPlay()
 {
 	Super::BeginPlay();
 	// Buscar al jugador
@@ -68,11 +70,11 @@ void AFDisparo::BeginPlay()
 
 	// Usar un timer pequeño para dar tiempo a que se inicialice todo
 	FTimerHandle TimerHandle;
-	GetWorldTimerManager().SetTimer(TimerHandle, this, &AFDisparo::Atacar, 0.1f, false);
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &AFEscombro::Atacar, 0.1f, false);
 }
 
 // Called every frame
-void AFDisparo::Tick(float DeltaTime)
+void AFEscombro::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	if (Jugador)
@@ -88,12 +90,12 @@ void AFDisparo::Tick(float DeltaTime)
 	}
 }
 
-void AFDisparo::SetPosicionObjetivo(const FVector& NuevaPosicionObjetivo)
+void AFEscombro::SetPosicionObjetivo(const FVector& NuevaPosicionObjetivo)
 {
 	PosicionObjetivo = NuevaPosicionObjetivo;
 }
 
-void AFDisparo::Atacar()
+void AFEscombro::Atacar()
 {
 	// Usar la posición objetivo fija en lugar de la posición actual del jugador
 	if (PosicionObjetivo != FVector::ZeroVector)
@@ -119,8 +121,7 @@ void AFDisparo::Atacar()
 	}
 }
 
-// Collision detection
-void AFDisparo::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
+void AFEscombro::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
 {
 	Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
 
@@ -142,3 +143,4 @@ void AFDisparo::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitive
 	// Destruir el disparo en cualquier caso
 	Destroy();
 }
+
