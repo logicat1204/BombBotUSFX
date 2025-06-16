@@ -38,41 +38,20 @@ Cada "mundo" o nivel (`World1`, `World2`, `World3`) se construye siguiendo una s
 
 ### Componentes Clave
 
-####  Director: `ALevels_Director`
-- **Responsabilidad:** Orquestra el proceso de construcción del nivel, definiendo la secuencia de pasos.
+#### Director: `ALevels_Director`
+- **Responsabilidad:** Orquesta el proceso de construcción del nivel, definiendo la secuencia de pasos.
 - **Métodos:** `CreateLevel1()`, `CreateLevel2()`, etc., que invocan los métodos del constructor asignado.
-- **Ubicación:**
-  - `Levels_Director.h` (Page 12, lines 18–35)
-  - `Levels_Director.cpp` (Page 28, lines 17–29 y Page 29, lines 1–38)
+- **Ubicación:** `Levels_Director.h` y `Levels_Director.cpp`
 
----
-
-####  Abstract Builder: `IILevels_Builder`
+#### Abstract Builder: `IILevels_Builder`
 - **Responsabilidad:** Declara una interfaz para la construcción de las partes del objeto Nivel. Define los métodos para construir el mapa, enemigos, power-ups, etc.
-- **Ubicación:**
-  - `ILevels_Builder.h` (Page 11, lines 15–28)
+- **Ubicación:** `ILevels_Builder.h`
 
----
+#### Concrete Builders: `AWorld1_Builder`, `AWorld2_Builder`, `AWorld3_Builder`
+- **Responsabilidad:** Implementan la interfaz `IILevels_Builder`.  
+  Cada constructor concreto (por ejemplo, `AWorld1_Builder` para el Mundo 1) sabe cómo construir las partes del nivel específico, utilizando una **Factory** particular para la creación de los componentes.
+- **Ubicación:** Archivos `.h` y `.cpp` correspondientes de cada builder.
 
-####  Concrete Builders:
-- `AWorld1_Builder`
-- `AWorld2_Builder`
-- `AWorld3_Builder`
-
-**Responsabilidad:**  
-Implementan la interfaz `IILevels_Builder`.  
-Cada constructor concreto (por ejemplo, `AWorld1_Builder` para el Mundo 1) sabe cómo construir las partes del nivel específico, utilizando una **Factory** particular para la creación de los componentes.
-
-**Ubicación:**
-- `World1_Builder.h` (Page 14, lines 12–25)
-- `World2_Builder.h` (Page 27, lines 12–25)
-- `World3_Builder.h` (Page 24, lines 12–25)
-- `World1_Builder.cpp` (Page 31, lines 23–37 y Page 32, lines 1–31)
-- `World2_Builder.cpp` (Page 59, lines 23–37 y Page 60, lines 1–13)
-- `World3_Builder.cpp` (Page 51, lines 23–37 y Page 52, lines 1–13)
-
----
-
-####  Producto: El Nivel
-Representado por el conjunto de **bloques**, **enemigos**, y **power-ups** en el mundo.  
-Este es el **objeto complejo** que se está construyendo mediante el patrón *Builder*.
+#### Producto: El Nivel
+- Representado por el conjunto de bloques, enemigos y power-ups en el mundo.  
+- Este es el **objeto complejo** que se está construyendo mediante el patrón *Builder*.
