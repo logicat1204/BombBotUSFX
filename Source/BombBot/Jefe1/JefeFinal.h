@@ -37,7 +37,7 @@ protected:
 	int32 EscombrosAttacks = 3;
 
 	AFSpawnerEsbirros* SpawnerEsbirros;
-	int32 CantEsbirros = 1;
+	int32 CantEsbirros = 2;
 
 	int32 TimingAttacks = 7.0f;
 public:	
