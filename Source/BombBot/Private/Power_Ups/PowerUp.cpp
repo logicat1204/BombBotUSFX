@@ -65,7 +65,7 @@ bool APowerUp::ActivatePowerUp(ABombBotCharacter* PlayerCharacter)
 	// Si el puntero al personaje es válido...
 	if (PlayerCharacter)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Power Up base activado por %s. Esta función debe ser sobreescrita."), *PlayerCharacter->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Power Up base activado por %s. Esta funcion debe ser sobreescrita."), *PlayerCharacter->GetName());
 		return true; // <--- CORREGIDO: Debería retornar true si se "activa" con éxito.
 	}
 
