@@ -246,6 +246,7 @@ void AWorld1_Factory::CreateBlocks(TArray<TArray<int32>> FullMap, int32 Altura)
 
 	int32 Filas = FullMap.Num();
 	int32 Columnas = FullMap[0].Num();
+	AActor* Bloque=nullptr;
 
 	for (int32 i = 0; i < Filas; i++)
 	{
@@ -285,12 +286,37 @@ void AWorld1_Factory::CreateBlocks(TArray<TArray<int32>> FullMap, int32 Altura)
 				break;
 			case 5:
 				GetWorld()->SpawnActor<AGenerador_Enemigos>(AGenerador_Enemigos::StaticClass(),Posicion,FRotator::ZeroRotator);
-				//verificamos que el enemigo se cree correctamente
-				UE_LOG(LogTemp, Warning, TEXT("Enemigo creado en la posicion: %s"), *Posicion.ToString());
 				break;
+			case 6:
+				if (FabricaBloques)
+				{
+					Bloque=FabricaBloques->CrearBloque("BloqueSalida", Posicion);
+				}
+				break;
+
 			default:
 				break;
 			}
+
+			// Solo agregamos a TActorBlocks si el bloque fue creado
+			if (Bloque)
+			{
+				TActorBlocks.Add(Bloque);
+			}
+		}
+	}
+}
+
+void AWorld1_Factory::CreateExit()
+{
+	//Elegimos aleatoriamente una posicion de salida de nuestro contenedor de posiciones
+	if (TActorBlocks.Num() > 0)
+	{
+		int32 RandomIndex = FMath::RandRange(0, TActorBlocks.Num() - 1);
+		AActor* ExitBlock = TActorBlocks[RandomIndex];
+		if (ExitBlock)
+		{
+			ExitBlock->Destroy();// Destruimos el bloque para generar la salida
 		}
 	}
 }

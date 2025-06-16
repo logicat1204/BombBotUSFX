@@ -56,4 +56,8 @@ void AWorld1_Builder::FinalizeLevel()
 	Factory->EndLevel();
 }
 
+void AWorld1_Builder::BuildExit()
+{
+	Factory->CreateExit();
+}
 

@@ -21,6 +21,7 @@ void ABuilder_Main::BeginPlay()
 
 	Director->SetLevelBuilder(Builder);
 	Builder->BuildMap();
+	Builder->BuildExit();
 
 }
 

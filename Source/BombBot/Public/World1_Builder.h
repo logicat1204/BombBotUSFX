@@ -35,4 +35,6 @@ public:
 	virtual void BuildPortals() override;
 	virtual void SetStartPosition() override;
 	virtual void FinalizeLevel() override;
+
+	void BuildExit();
 };

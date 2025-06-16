@@ -3,28 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "World1_Builder.h"
-#include "Levels_Director.h"
 #include "GameFramework/Actor.h"
-#include "Builder_Main.generated.h"
+#include "Bloque_Salida.generated.h"
 
 UCLASS()
-class BOMBBOT_API ABuilder_Main : public AActor
+class BOMBBOT_API ABloque_Salida : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ABuilder_Main();
+	ABloque_Salida();
+	UStaticMeshComponent* MallaBloque;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	//CREAMOS AL BUILDER Y AL DIRECTOR
-	AWorld1_Builder* Builder;
-	ALevels_Director* Director;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 };
