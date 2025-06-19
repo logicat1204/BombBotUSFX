@@ -253,6 +253,59 @@ Este enfoque abstrae completamente la lógica de creación de power-ups. La clas
 
 ---
 
+## 4. Facade Pattern (Patrón Fachada)
+
+### Definición
+
+El patrón **Fachada (Facade)** permite ocultar la complejidad de un sistema al proporcionar una interfaz simplificada a un conjunto de subsistemas. De esta manera, el cliente puede interactuar con el sistema de forma más sencilla, sin preocuparse por los detalles internos.
+
+---
+
+### Contexto en el Proyecto: Comportamiento del Jefe Final
+
+En *BombBot*, el patrón **Facade** se utiliza para encapsular la lógica de comportamiento del jefe final del juego. Este patrón permite agrupar diferentes subsistemas (ataques, esbirros, disparos, etc.) bajo una única interfaz: `JefeFinal`.
+
+Esto mejora la modularidad del código, facilita el mantenimiento y permite agregar nuevas funcionalidades sin alterar directamente los subsistemas.
+
+---
+
+### Componentes Clave
+
+#### Fachada: `JefeFinal`
+- **Responsabilidad:** Coordina el comportamiento del jefe final utilizando múltiples subsistemas encargados de ejecutar ataques específicos.
+- **Ubicación:** `JefeFinal.h` / `JefeFinal.cpp`
+
+#### Subsistemas:
+- `FSpawnerEsbirros`: Encargado de generar esbirros durante la batalla.
+- `FSpawnerEscombros`: Genera escombros que caen sobre el jugador, añadiendo presión constante.
+- `FSpawnerDisparos`: Dispara proyectiles en ráfagas hacia el jugador.
+
+> Cada subsistema encapsula una funcionalidad específica del jefe, lo que mejora la separación de responsabilidades y facilita la extensión del comportamiento.
+
+**Responsabilidad:**  
+Cada clase hace que el jefe final funcione adecuadamente, siendo que cada ataque sea un subsistema, esto le da mayor modularidad y hace que el desarrollo del jefe sea mas sencillo.
+
+**Ubicación:** Archivos `.h` y `.cpp` correspondientes a cada subsistema.
+
+
+---
+
+### Diagrama UML de Clases (Facade Pattern)
+
+   ![image](https://github.com/user-attachments/assets/54bf9a22-c22b-4f4f-aa03-cb43a688ccaf)
+
+### Explicación del Uso
+
+El objeto `JefeFinal` actúa como la **fachada** principal que interactúa con múltiples subsistemas de ataque. Cada subsistema está especializado en un comportamiento específico, como generar enemigos (`FSpawnerEsbirros`), lanzar escombros (`FSpawnerEscombros`) o disparar ráfagas (`FSpawnerDisparos`).
+
+Este enfoque permite que el `JefeFinal` combine fácilmente diferentes comportamientos, orquestándolos sin que el cliente tenga que conocer los detalles internos de cada clase. Agregar nuevos ataques se vuelve sencillo, ya que solo se requiere crear un nuevo subsistema e integrarlo en la fachada sin afectar el resto del código.
+
+La modularidad obtenida con el patrón Facade favorece el mantenimiento, la reutilización de código y la escalabilidad del sistema de enemigos.
+
+---
+
+
+
 ### Conclusión
 
 Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y **Factory Method** en nuestro proyecto *BombBot* que ha sido clave para lograr una arquitectura robusta, modular y extensible.
@@ -262,6 +315,8 @@ Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y
 - **Abstract Factory Pattern**: Garantiza la coherencia temática de cada mundo al proporcionar familias de objetos relacionadas entre sí (bloques, enemigos, power-ups), asegurando compatibilidad y facilitando cambios globales por mundo.
 
 - **Factory Method Pattern**: Facilita la creación específica de tipos de bloques y power-ups mediante métodos parametrizados, aislando el código cliente de las decisiones de instanciación concretas.
+
+- **Facade Pattern**: Simplifica el control del jefe final al encapsular múltiples subsistemas de ataque bajo una única interfaz (JefeFinal), lo que permite gestionar comportamientos complejos de forma modular, flexible y extensible.
 
 En conjunto, estos patrones no solo mejoran la mantenibilidad y escalabilidad del código, sino que también sientan las bases para futuras expansiones del juego, como la incorporación de nuevos mundos, enemigos, o mecánicas de juego, con un mínimo impacto en el código existente.
 
