@@ -26,11 +26,11 @@
 
 ## Participantes
 Trabajo realizado por:
-- Arancibia Estrada Alvaro David. `Ing. Ciencas de la Computación`
-- Mollinedo Siles Renzo Sebastián. `Ing. Ciencas de la Computación`
-- Quispe Ticona Josias Asael. `Ing. Ciencas de la Computación`, `Ing. Tegnologias de la Información y Seguridad`
+- Arancibia Estrada Alvaro David. `Ing. Ciencias de la Computación`
+- Mollinedo Siles Renzo Sebastián. `Ing. Ciencias de la Computación`
+- Quispe Ticona Josias Asael. `Ing. Ciencias de la Computación`, `Ing. Tecnologias de la Información y Seguridad`
 - Magne Ordoñez Pedro Jhoel Antonio. `Ing. Ciencas de la Computación`
-- Cornejo Moscoso Gabriel Orlando. `Ing. Ciencas de la Computación`
+- Cornejo Moscoso Gabriel Orlando. `Ing. Ciencias de la Computación`
 
 ### SIS 457 - Programacion Avanzada
 ### Facultad de Ciencia y Tegnologia
