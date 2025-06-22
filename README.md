@@ -422,7 +422,8 @@ La modularidad obtenida con el patrón Facade favorece el mantenimiento, la reut
 
 ### Gameplay grabado del juego
 
-[![Haz clic para ver el video](https://i.ibb.co/xbdmFGd/video-preview.png)](https://www.youtube.com/watch?v=_IjVIPqWHDM)
+[![WhatsApp Image 2025-06-22 at 13 17 33_b422c368](https://github.com/user-attachments/assets/05c1c8c9-1b26-4fc6-9e58-b423d4df9216)](https://youtu.be/_IjVIPqWHDM?si=VkpBT7_jAyxYNzRl)
+
 click en la imagen para ver.
 
 ### Conclusión
@@ -438,6 +439,5 @@ Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y
 - **Facade Pattern**: Simplifica el control del jefe final al encapsular múltiples subsistemas de ataque bajo una única interfaz (JefeFinal), lo que permite gestionar comportamientos complejos de forma modular, flexible y extensible.
 
 En conjunto, estos patrones no solo mejoran la mantenibilidad y escalabilidad del código, sino que también sientan las bases para futuras expansiones del juego, como la incorporación de nuevos mundos, enemigos, o mecánicas de juego, con un mínimo impacto en el código existente.
-#### Nuestro equipo trabajando
-![Equipo](https://github.com/user-attachments/assets/a327a62d-4da3-423d-b2f1-83f1a9cadff7)
+
 
