@@ -38,6 +38,7 @@ Trabajo realizado por:
 
  [Puedes ver la presentacion del juego aqui](https://docs.google.com/presentation/d/1gwHen4h_9wBLuj7uPDwHeS0FxZE_c7yZeHTUA4ozb_8/edit?usp=sharing)
 ---
+![Imagen de Portada](https://github.com/user-attachments/assets/e67e43f8-82da-47de-9bc1-c84012331841)
 
 
 # Documentación del Proyecto BombBot
@@ -58,6 +59,8 @@ La arquitectura de BombBot sigue un enfoque modular y basado en componentes, tí
 - **Gestión del Juego**: Control de la puntuación, estado de la partida y UI general.
 
 ## 3. Sistemas Clave del Juego
+![Imagen Visual](https://github.com/user-attachments/assets/06b64b94-f013-4839-9d3c-8d03e157b6c0)
+
 
 ### 3.1. Personaje del Jugador (ABombBotCharacter)
 
@@ -432,4 +435,6 @@ Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y
 - **Facade Pattern**: Simplifica el control del jefe final al encapsular múltiples subsistemas de ataque bajo una única interfaz (JefeFinal), lo que permite gestionar comportamientos complejos de forma modular, flexible y extensible.
 
 En conjunto, estos patrones no solo mejoran la mantenibilidad y escalabilidad del código, sino que también sientan las bases para futuras expansiones del juego, como la incorporación de nuevos mundos, enemigos, o mecánicas de juego, con un mínimo impacto en el código existente.
+#### Nuestro equipo trabajando
+![Equipo](https://github.com/user-attachments/assets/a327a62d-4da3-423d-b2f1-83f1a9cadff7)
 
