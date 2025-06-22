@@ -1,17 +1,129 @@
-# Documentación Técnica del Proyecto BombBot
-
-Este documento detalla la arquitectura del videojuego **BombBot**, un título inspirado en el clásico *Bomberman*, con un enfoque particular en la aplicación de patrones de diseño de software para la generación procedural de niveles y la creación de objetos del juego.
-
----
+# Documentacion
 
 ## Tabla de Contenido
 
-1. [Introducción](#introducción)
-2. [Patrones de Diseño Aplicados](#patrones-de-diseño-aplicados)
-   - [Builder Pattern (Constructor)](#1-builder-pattern-constructor)
-   - [Abstract Factory Pattern (Fábrica Abstracta)](#2-abstract-factory-pattern-fábrica-abstracta)
-   - [Factory Method Pattern (Método de Fábrica)](#3-factory-method-pattern-método-de-fábrica)
-3. [Conclusión](#conclusión)
+1. [Sobre los participantes](#participantes)  
+1. [Documentacion General del Proyecto](#1-introducción)  
+   - [Arquitectura General del Software](#2-arquitectura-general-del-software)  
+   - [Sistemas Clave del Juego](#3-sistemas-clave-del-juego)  
+      - [3.1. Personaje del Jugador (ABombBotCharacter)](#31-personaje-del-jugador-abombbotcharacter)  
+      - [3.2. Objetos del Mundo](#32-objetos-del-mundo)  
+        - [3.2.1. Bloques](#321-bloques)  
+        - [3.2.2. Bombas (ABomba)](#322-bombas-abomba)  
+        - [3.2.3. Explosiones (AExplosion)](#323-explosiones-aexplosion)  
+        - [3.2.4. Power-Ups (APowerUp y derivados)](#324-power-ups-apowerup-y-derivados)  
+      - [3.3. Sistema de Enemigos](#33-sistema-de-enemigos)  
+      - [3.4. Interfaz de Usuario (UI/HUD)](#34-interfaz-de-usuario-uihud)  
+      - [3.5. Gestión del Juego (UBombBotGameInstance)](#35-gestión-del-juego-ubombbotgameinstance) 
+2. [Documentación Técnica del Proyecto](#introducción)  
+   - [Patrones de Diseño Aplicados](#patrones-de-diseño-aplicados)  
+      - [Builder Pattern (Constructor)](#1-builder-pattern-constructor)  
+      - [Abstract Factory Pattern (Fábrica Abstracta)](#2-abstract-factory-pattern-fábrica-abstracta)  
+      - [Factory Method Pattern (Método de Fábrica)](#3-factory-method-pattern-método-de-fábrica)  
+      - [Facade Pattern (Fachada)](#4-facade-pattern-patrón-fachada)  
+   - [Conclusión](#conclusión)  
+
+
+## Participantes
+Trabajo realizado por:
+- Arancibia Estrada Alvaro David. `Ing. Ciencas de la Computación`
+- Mollinedo Siles Renzo Sebastián. `Ing. Ciencas de la Computación`
+- Quispe Ticona Josias Asael. `Ing. Ciencas de la Computación`, `Ing. Tegnologias de la Información y Seguridad`
+- Magne Ordoñez Pedro Jhoel Antonio. `Ing. Ciencas de la Computación`
+- Cornejo Moscoso Gabriel Orlando. `Ing. Ciencas de la Computación`
+
+### SIS 457 - Programacion Avanzada
+### Facultad de Ciencia y Tegnologia
+### Universidad de San Francisco Xavier de Chuquisaca    
+
+ [Puedes ver la presentacion del juego aqui](https://docs.google.com/presentation/d/1gwHen4h_9wBLuj7uPDwHeS0FxZE_c7yZeHTUA4ozb_8/edit?usp=sharing)
+---
+
+
+# Documentación del Proyecto BombBot
+
+## 1. Introducción
+
+BombBot es un videojuego inspirado en el clásico Bomberman, desarrollado en Unreal Engine utilizando C++. El objetivo principal de este proyecto académico es crear una experiencia de juego estratégica centrada en la colocación de bombas y la navegación a través de niveles generados proceduralmente. Esta documentación proporciona una visión general de la arquitectura del software, los sistemas clave implementados y los patrones de diseño utilizados para asegurar la modularidad, extensibilidad y mantenibilidad del código.
+
+## 2. Arquitectura General del Software
+
+La arquitectura de BombBot sigue un enfoque modular y basado en componentes, típico de los proyectos de Unreal Engine. Se prioriza la separación de responsabilidades para facilitar el desarrollo y la expansión. La estructura se organiza en torno a los principales actores del juego y sistemas de gestión, utilizando clases base abstractas y patrones de diseño para manejar la complejidad inherente a la generación procedural y las interacciones del juego.
+
+### Los principales dominios lógicos incluyen:
+- **Personaje del Jugador**: Lógica de control, interacción, salud y UI.
+- **Objetos del Mundo**: Bloques, bombas y power-ups con sus comportamientos específicos.
+- **Sistema de Enemigos**: Lógica de IA, patrullaje y generación.
+- **Generación de Niveles**: Un sistema robusto para crear mapas dinámicamente.
+- **Gestión del Juego**: Control de la puntuación, estado de la partida y UI general.
+
+## 3. Sistemas Clave del Juego
+
+### 3.1. Personaje del Jugador (ABombBotCharacter)
+
+El `ABombBotCharacter` es la clase principal que representa al jugador en el juego.
+
+**Funcionalidades:**
+- Movimiento y Cámara
+- Entrada (Input)
+- Gestión de Vidas y Respawn
+- Colocación de Bombas
+- Interacción con Power-Ups
+- Interfaz de Usuario (UI)
+- Puntuación
+
+### 3.2. Objetos del Mundo
+
+#### 3.2.1. Bloques
+
+- `ABloque` (Bloque Básico)
+- `ABloqueGeneral` (Base Destructible)
+- `ABloqueDestructibleBase` (Clase intermedia)
+- `ASubBloqueBase` (Fragmentos)
+- Bloques Concretos: Madera, Piedra, Pasto, Tierra
+
+#### 3.2.2. Bombas (ABomba)
+
+- Temporizador de Explosión
+- Efectos Visuales y Sonoros
+- Rango de Explosión
+- Mecanismo de Bloqueo (`ALockSphere`)
+- Gestión de Bombas Colocadas
+
+#### 3.2.3. Explosiones (AExplosion)
+
+- Propagación
+- Detección de Impacto
+- Efectos Visuales
+- Puntuación y Daño
+
+#### 3.2.4. Power-Ups (APowerUp y Derivados)
+
+- `APowerUp` (Abstracta)
+- `APowerUp_Inmortalidad`
+- `APowerUp_Velocidad`
+- `APoweUp_Curacion`
+
+### 3.3. Sistema de Enemigos
+
+- `AEnemigo` (Clase Base)
+- `AEnemigo_Bomb`
+- `AEnemigo_Comun`
+- `AGenerador_Enemigos`
+
+### 3.4. Interfaz de Usuario (UI/HUD)
+
+- `UWUI_Principal` (LifeUI)
+- Widgets de Estado: Game Over y Pausa
+
+### 3.5. Gestión del Juego (UBombBotGameInstance)
+
+- Puntuación persistente global
+
+
+# Documentación Técnica del Proyecto BombBot
+
+Este apartado detalla la arquitectura del videojuego **BombBot**, con un enfoque particular en la aplicación de patrones de diseño de software para la generación procedural de niveles y la creación de objetos del juego.
 
 ---
 
@@ -29,6 +141,7 @@ Los siguientes patrones de diseño están implementados de manera prominente en 
 - **Builder Pattern (Constructor)**
 - **Abstract Factory Pattern (Fábrica Abstracta)**
 - **Factory Method Pattern (Método de Fábrica)**
+- **Facade Pattern (Fachada)**
 
 ---
 
@@ -283,7 +396,7 @@ Esto mejora la modularidad del código, facilita el mantenimiento y permite agre
 > Cada subsistema encapsula una funcionalidad específica del jefe, lo que mejora la separación de responsabilidades y facilita la extensión del comportamiento.
 
 **Responsabilidad:**  
-Cada clase hace que el jefe final funcione adecuadamente, siendo que cada ataque sea un subsistema, esto le da mayor modularidad y hace que el desarrollo del jefe sea mas sencillo.
+Cada clase hace que el jefe final funcione adecuadamente, siendo que cada ataque sea un subsistema, esto mejora la modularidad y facilita el desarrollo del jefe.
 
 **Ubicación:** Archivos `.h` y `.cpp` correspondientes a cada subsistema.
 
@@ -319,15 +432,4 @@ Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y
 - **Facade Pattern**: Simplifica el control del jefe final al encapsular múltiples subsistemas de ataque bajo una única interfaz (JefeFinal), lo que permite gestionar comportamientos complejos de forma modular, flexible y extensible.
 
 En conjunto, estos patrones no solo mejoran la mantenibilidad y escalabilidad del código, sino que también sientan las bases para futuras expansiones del juego, como la incorporación de nuevos mundos, enemigos, o mecánicas de juego, con un mínimo impacto en el código existente.
-
-
-## Creditos
-Trabajo realizado por:
-- Arancibia Estrada Alvaro David.
-- Mollinedo Siles Renzo Sebastián.
-- Quispe Ticona Josias Asael.
-- Magne Ordoñez Pedro Jhoel Antonio.
-- Cornejo Moscoso Gabriel Orlando.
-
-### SIS 457 - Programacion Avanzada
 
