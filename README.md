@@ -406,9 +406,9 @@ Cada clase hace que el jefe final funcione adecuadamente, siendo que cada ataque
 
 ---
 
-### Diagrama UML de Clases (Facade Pattern)
+<!-- ### Diagrama UML de Clases (Facade Pattern)
 
-   ![image](https://github.com/user-attachments/assets/54bf9a22-c22b-4f4f-aa03-cb43a688ccaf)
+   ![image](https://github.com/user-attachments/assets/54bf9a22-c22b-4f4f-aa03-cb43a688ccaf)-->
 
 ### Explicación del Uso
 
