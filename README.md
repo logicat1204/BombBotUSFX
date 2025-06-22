@@ -423,7 +423,7 @@ La modularidad obtenida con el patrón Facade favorece el mantenimiento, la reut
 ### Gameplay grabado del juego
 
 [![Haz clic para ver el video](https://i.ibb.co/xbdmFGd/video-preview.png)](https://www.youtube.com/watch?v=_IjVIPqWHDM)
-
+click en la imagen para ver.
 
 ### Conclusión
 
