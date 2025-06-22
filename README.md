@@ -426,6 +426,12 @@ La modularidad obtenida con el patrón Facade favorece el mantenimiento, la reut
 
 click en la imagen para ver.
 
+---
+
+### Como instalar el juego
+
+Como el juego es aún una versión en Pre-alpha, para instalar el juego simplemente se debe clonar el repositorio y jugar.
+
 ### Conclusión
 
 Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y **Factory Method** en nuestro proyecto *BombBot* que ha sido clave para lograr una arquitectura robusta, modular y extensible.
