@@ -1,449 +1,686 @@
-# Documentacion
+# 🎮 **Documentación del Proyecto: BombBot**
 
-## Tabla de Contenido
-
-1. [Sobre los participantes](#participantes)  
-1. [Documentacion General del Proyecto](#1-introducción)  
-   - [Arquitectura General del Software](#2-arquitectura-general-del-software)  
-   - [Sistemas Clave del Juego](#3-sistemas-clave-del-juego)  
-      - [3.1. Personaje del Jugador (ABombBotCharacter)](#31-personaje-del-jugador-abombbotcharacter)  
-      - [3.2. Objetos del Mundo](#32-objetos-del-mundo)  
-        - [3.2.1. Bloques](#321-bloques)  
-        - [3.2.2. Bombas (ABomba)](#322-bombas-abomba)  
-        - [3.2.3. Explosiones (AExplosion)](#323-explosiones-aexplosion)  
-        - [3.2.4. Power-Ups (APowerUp y derivados)](#324-power-ups-apowerup-y-derivados)  
-      - [3.3. Sistema de Enemigos](#33-sistema-de-enemigos)  
-      - [3.4. Interfaz de Usuario (UI/HUD)](#34-interfaz-de-usuario-uihud)  
-      - [3.5. Gestión del Juego (UBombBotGameInstance)](#35-gestión-del-juego-ubombbotgameinstance) 
-2. [Documentación Técnica del Proyecto](#introducción)  
-   - [Patrones de Diseño Aplicados](#patrones-de-diseño-aplicados)  
-      - [Builder Pattern (Constructor)](#1-builder-pattern-constructor)  
-      - [Abstract Factory Pattern (Fábrica Abstracta)](#2-abstract-factory-pattern-fábrica-abstracta)  
-      - [Factory Method Pattern (Método de Fábrica)](#3-factory-method-pattern-método-de-fábrica)  
-      - [Facade Pattern (Fachada)](#4-facade-pattern-patrón-fachada)  
-   - [Conclusión](#conclusión)  
-
-
-## Participantes
-Trabajo realizado por:
-- Arancibia Estrada Alvaro David. `Ing. Ciencias de la Computación`
-- Mollinedo Siles Renzo Sebastián. `Ing. Ciencias de la Computación`
-- Quispe Ticona Josias Asael. `Ing. Ciencias de la Computación`, `Ing. Tecnologias de la Información y Seguridad`
-- Magne Ordoñez Pedro Jhoel Antonio. `Ing. Ciencas de la Computación`
-- Cornejo Moscoso Gabriel Orlando. `Ing. Ciencias de la Computación`
-
-### SIS 457 - Programacion Avanzada
-### Facultad de Ciencia y Tegnologia
-### Universidad de San Francisco Xavier de Chuquisaca    
-
- [Puedes ver la presentacion del juego aqui](https://docs.google.com/presentation/d/1gwHen4h_9wBLuj7uPDwHeS0FxZE_c7yZeHTUA4ozb_8/edit?usp=sharing)
 ---
+
+## 🕹️ **Controles del Juego**
+
+| Acción                  | Tecla(s)                |
+|-------------------------|-------------------------|
+| **Caminar**             | WASD o Flechas          |
+| **Colocar bombas**      | Espacio                 |
+| **Encender/Apagar linterna** | F              |
+| **Pausa**               | P and ESCAPE            |
+
+---
+
+## 📑 **Tabla de Contenido**
+
+### 1. [👥 Participantes e Información General](#participantes-e-información-general)
+*   [1.1 Participantes](#participantes)
+*   [1.2 Datos Académicos](#datos-académicos)
+*   [1.3 Presentación del Proyecto](#presentación-del-proyecto)
+
+### 2. [📘 Documentación General del Proyecto](#documentación-del-proyecto-bombbot)
+*   [2.1 Introducción](#1-introducción)
+*   [2.2 Arquitectura General del Software](#2-arquitectura-general-del-software)
+    *   [Dominios Lógicos Principales](#dominios-lógicos-principales)
+*   [2.3 Sistemas Clave del Juego](#3-sistemas-clave-del-juego)
+    *   [2.3.1 Personaje del Jugador (ABombBotCharacter)](#31-personaje-del-jugador-–-abombbotcharacter)
+    *   [2.3.2 Objetos del Mundo](#32-objetos-del-mundo)
+        *   [Bloques](#321-bloques)
+        *   [Bombas (ABomba)](#322-bombas-–-abomba)
+        *   [Explosiones (AExplosion)](#323-explosiones-–-aexplosion)
+        *   [Power-Ups (APowerUp y Derivados)](#324-power-ups-–-apowerup-y-derivados)
+    *   [2.3.3 Sistema de Enemigos](#33-sistema-de-enemigos)
+    *   [2.3.4 Interfaz de Usuario (UI/HUD)](#34-interfaz-de-usuario-uihud)
+    *   [2.3.5 Gestión del Juego (UBombBotGameInstance)](#35-gestión-del-juego-–-ubombbotgameinstance)
+
+### 3. [💻 Documentación Técnica del Proyecto: Patrones de Diseño](#documentación-técnica-del-proyecto-bombbot)
+*   [3.1 Introducción a los Patrones](#introducción-a-los-patrones)
+*   [3.2 Patrones de Diseño Aplicados](#patrones-de-diseño-aplicados)
+    *   [3.2.1 Builder Pattern (Constructor)](#1-builder-pattern-–-constructor)
+    *   [3.2.2 Abstract Factory Pattern (Fábrica Abstracta)](#2-abstract-factory-pattern-–-fábrica-abstracta)
+    *   [3.2.3 Factory Method Pattern (Método de Fábrica)](#3-factory-method-pattern-–-método-de-fábrica)
+        *   [Sistema de Bloques](#a-sistema-de-bloques)
+        *   [Sistema de Power-Ups](#b-sistema-de-power-ups)
+    *   [3.2.4 Facade Pattern (Patrón Fachada)](#4-facade-pattern-–-patrón-fachada)
+*   [3.3 Gameplay Grabado del Juego](#gameplay-grabado)
+*   [3.4 Cómo Instalar el Juego](#cómo-instalar-el-juego)
+    *   [Instrucciones](#instrucciones)
+*   [3.5 Conclusión General](#conclusión-general)
+
+---
+
+## 👥 **Participantes**
+
+**Trabajo realizado por:**
+- **Arancibia Estrada, Álvaro David** — `Ing. Ciencias de la Computación`
+- **Mollinedo Siles, Renzo Sebastián** — `Ing. Ciencias de la Computación`
+- **Quispe Ticona, Josias Asael** — `Ing. Ciencias de la Computación`, `Ing. Tecnologías de la Información y Seguridad`
+- **Magne Ordoñez, Pedro Jhoel Antonio** — `Ing. Ciencias de la Computación`
+- **Cornejo Moscoso, Gabriel Orlando** — `Ing. Ciencias de la Computación`
+
+---
+
+## 🎓 **Datos Académicos**
+
+- **Materia:** SIS 457 - *Programación Avanzada*  
+- **Docente:** Ing. Carlos Walter Pacheco Lora  
+- **Facultad:** Ciencia y Tecnología  
+- **Universidad:** Universidad Mayor, Real y Pontificia San Francisco Xavier de Chuquisaca
+
+
+---
+
+## 📽️ **Presentación del Proyecto**
+
+[🎬 **Haz clic aquí para ver la presentación del juego en Google Slides**](https://docs.google.com/presentation/d/1gwHen4h_9wBLuj7uPDwHeS0FxZE_c7yZeHTUA4ozb_8/edit?usp=sharing)
+
+---
+
 ![Imagen de Portada](https://github.com/user-attachments/assets/e67e43f8-82da-47de-9bc1-c84012331841)
 
+---
 
-# Documentación del Proyecto BombBot
-
-## 1. Introducción
-
-BombBot es un videojuego inspirado en el clásico Bomberman, desarrollado en Unreal Engine utilizando C++. El objetivo principal de este proyecto académico es crear una experiencia de juego estratégica centrada en la colocación de bombas y la navegación a través de niveles generados proceduralmente. Esta documentación proporciona una visión general de la arquitectura del software, los sistemas clave implementados y los patrones de diseño utilizados para asegurar la modularidad, extensibilidad y mantenibilidad del código.
-
-## 2. Arquitectura General del Software
-
-La arquitectura de BombBot sigue un enfoque modular y basado en componentes, típico de los proyectos de Unreal Engine. Se prioriza la separación de responsabilidades para facilitar el desarrollo y la expansión. La estructura se organiza en torno a los principales actores del juego y sistemas de gestión, utilizando clases base abstractas y patrones de diseño para manejar la complejidad inherente a la generación procedural y las interacciones del juego.
-
-### Los principales dominios lógicos incluyen:
-- **Personaje del Jugador**: Lógica de control, interacción, salud y UI.
-- **Objetos del Mundo**: Bloques, bombas y power-ups con sus comportamientos específicos.
-- **Sistema de Enemigos**: Lógica de IA, patrullaje y generación.
-- **Generación de Niveles**: Un sistema robusto para crear mapas dinámicamente.
-- **Gestión del Juego**: Control de la puntuación, estado de la partida y UI general.
-
-## 3. Sistemas Clave del Juego
-![Imagen Visual](https://github.com/user-attachments/assets/06b64b94-f013-4839-9d3c-8d03e157b6c0)
-
-
-### 3.1. Personaje del Jugador (ABombBotCharacter)
-
-El `ABombBotCharacter` es la clase principal que representa al jugador en el juego.
-
-**Funcionalidades:**
-- Movimiento y Cámara
-- Entrada (Input)
-- Gestión de Vidas y Respawn
-- Colocación de Bombas
-- Interacción con Power-Ups
-- Interfaz de Usuario (UI)
-- Puntuación
-
-### 3.2. Objetos del Mundo
-
-#### 3.2.1. Bloques
-
-- `ABloque` (Bloque Básico)
-- `ABloqueGeneral` (Base Destructible)
-- `ABloqueDestructibleBase` (Clase intermedia)
-- `ASubBloqueBase` (Fragmentos)
-- Bloques Concretos: Madera, Piedra, Pasto, Tierra
-
-#### 3.2.2. Bombas (ABomba)
-
-- Temporizador de Explosión
-- Efectos Visuales y Sonoros
-- Rango de Explosión
-- Mecanismo de Bloqueo (`ALockSphere`)
-- Gestión de Bombas Colocadas
-
-#### 3.2.3. Explosiones (AExplosion)
-
-- Propagación
-- Detección de Impacto
-- Efectos Visuales
-- Puntuación y Daño
-
-#### 3.2.4. Power-Ups (APowerUp y Derivados)
-
-- `APowerUp` (Abstracta)
-- `APowerUp_Inmortalidad`
-- `APowerUp_Velocidad`
-- `APoweUp_Curacion`
-
-### 3.3. Sistema de Enemigos
-
-- `AEnemigo` (Clase Base)
-- `AEnemigo_Bomb`
-- `AEnemigo_Comun`
-- `AGenerador_Enemigos`
-
-### 3.4. Interfaz de Usuario (UI/HUD)
-
-- `UWUI_Principal` (LifeUI)
-- Widgets de Estado: Game Over y Pausa
-
-### 3.5. Gestión del Juego (UBombBotGameInstance)
-
-- Puntuación persistente global
-
-
-# Documentación Técnica del Proyecto BombBot
-
-Este apartado detalla la arquitectura del videojuego **BombBot**, con un enfoque particular en la aplicación de patrones de diseño de software para la generación procedural de niveles y la creación de objetos del juego.
+# 📘 **Documentación del Proyecto: BombBot**
 
 ---
 
-## Introducción
+## 🧩 **1. Introducción**
 
-El proyecto **BombBot** utiliza varios patrones de diseño para mejorar la **modularidad**, la **flexibilidad** y la **mantenibilidad** del código, especialmente en los subsistemas de **creación de mundos**, **gestión de objetos** y **lógica de juego**.  
-La implementación de estos patrones facilita la expansión del juego con nuevos tipos de niveles, enemigos y power-ups sin modificar el código existente de manera extensiva.
+**BombBot** es un videojuego estratégico inspirado en el clásico *Bomberman*, desarrollado en **Unreal Engine** utilizando **C++**.  
+El objetivo principal de este proyecto académico es ofrecer una experiencia de juego que combine **acción táctica**, **colocación precisa de bombas** y **exploración de niveles generados proceduralmente**.
 
----
-
-## Patrones de Diseño Aplicados
-
-Los siguientes patrones de diseño están implementados de manera prominente en la arquitectura del proyecto:
-
-- **Builder Pattern (Constructor)**
-- **Abstract Factory Pattern (Fábrica Abstracta)**
-- **Factory Method Pattern (Método de Fábrica)**
-- **Facade Pattern (Fachada)**
+Esta documentación proporciona una visión integral de la arquitectura del software, los sistemas principales del juego y los patrones de diseño aplicados para asegurar un desarrollo **modular**, **extensible** y **mantenible**.
 
 ---
 
-## 1. Builder Pattern (Constructor)
+## 🏗️ **2. Arquitectura General del Software**
 
-### Definición
+La arquitectura de **BombBot** sigue un enfoque **modular y orientado a componentes**, común en proyectos desarrollados con **Unreal Engine**. Se ha priorizado la **separación de responsabilidades** y el uso de **clases base abstractas** junto con **patrones de diseño** para gestionar la complejidad inherente a un juego con generación procedural.
 
-El patrón **Builder** separa la construcción de un objeto complejo de su representación, permitiendo que el mismo proceso de construcción cree diferentes representaciones. Un **Director** controla el proceso, delegando la creación de las partes a un **Builder (constructor)** específico.
+### 🔍 **Dominios Lógicos Principales**
 
----
+- 🎮 **Personaje del Jugador**  
+  Control del movimiento, salud, interacción y la interfaz de usuario (UI).
 
-### Contexto en el Proyecto: Generación de Niveles
+- 🧱 **Objetos del Mundo**  
+  Incluye bloques, bombas y power-ups, cada uno con comportamientos específicos.
 
-En *BombBot*, el **Builder Pattern** es fundamental para la construcción de los diferentes niveles del juego.  
-Cada "mundo" o nivel (`World1`, `World2`, `World3`) se construye siguiendo una secuencia de pasos definida por un **Director**, pero la implementación de esos pasos (cómo se construyen los mapas, se colocan enemigos, etc.) varía entre los constructores de cada mundo.
+- 🤖 **Sistema de Enemigos**  
+  Inteligencia artificial básica, patrullaje y aparición dinámica.
 
----
+- 🗺️ **Generación de Niveles**  
+  Sistema robusto que permite construir mapas dinámicos de forma procedural.
 
-### Componentes Clave
-
-#### Director: `ALevels_Director`
-- **Responsabilidad:** Orquesta el proceso de construcción del nivel, definiendo la secuencia de pasos.
-- **Métodos:** `CreateLevel1()`, `CreateLevel2()`, etc., que invocan los métodos del constructor asignado.
-- **Ubicación:** `Levels_Director.h` y `Levels_Director.cpp`
-
-#### Abstract Builder: `IILevels_Builder`
-- **Responsabilidad:** Declara una interfaz para la construcción de las partes del objeto Nivel. Define los métodos para construir el mapa, enemigos, power-ups, etc.
-- **Ubicación:** `ILevels_Builder.h`
-
-#### Concrete Builders: `AWorld1_Builder`, `AWorld2_Builder`, `AWorld3_Builder`
-- **Responsabilidad:** Implementan la interfaz `IILevels_Builder`.  
-  Cada constructor concreto (por ejemplo, `AWorld1_Builder` para el Mundo 1) sabe cómo construir las partes del nivel específico, utilizando una **Factory** particular para la creación de los componentes.
-- **Ubicación:** Archivos `.h` y `.cpp` correspondientes de cada builder.
-
-#### Producto: El Nivel
-- Representado por el conjunto de bloques, enemigos y power-ups en el mundo.  
-- Este es el **objeto complejo** que se está construyendo mediante el patrón *Builder*.
-
-###  Diagrama UML de Clases (Builder Pattern)
-
-  ![image](https://github.com/user-attachments/assets/0aee3dad-a3a9-4833-ae48-a05fbd7b481f)
-
-### Explicación del Uso del Builder Pattern
-
-El `ALevels_Director` es el componente central que decide la estructura de cada nivel.  
-Cuando se le solicita crear un nivel (`CreateLevel1`, `CreateLevel2`, etc.), ejecuta una secuencia de llamadas como `BuildMap()`, `BuildEnemy()`, etc., sobre una instancia concreta de `IILevels_Builder`.
-
-Los `AWorldX_Builder` son implementaciones concretas que traducen estas llamadas genéricas en lógica específica para construir el mundo correspondiente.  
-Delegan finalmente la creación de los "productos" (bloques, enemigos, power-ups) a sus respectivas fábricas (`AWorldX_Factory`).
-
-Este diseño permite cambiar fácilmente el tipo de mundo que se construye (por ejemplo, Mundo 1, Mundo 2, Mundo 3) simplemente asignando un `Concrete Builder` distinto al director, sin modificar la lógica de construcción general.
+- 🎯 **Gestión del Juego**  
+  Control del estado de la partida, sistema de puntuación y visualización de la UI global.
 
 ---
 
-## 2. Abstract Factory Pattern (Fábrica Abstracta)
-
-### Definición
-
-El patrón **Abstract Factory** proporciona una interfaz para crear **familias de objetos relacionados o dependientes** sin especificar sus clases concretas.  
-Permite a un cliente crear objetos que son coherentes entre sí.
 
 ---
 
-### Contexto en el Proyecto: Creación de Objetos del Mundo
+## 🎮 **3. Sistemas Clave del Juego**
 
-En *BombBot*, el patrón **Abstract Factory** se emplea para crear familias de objetos que pertenecen a un mundo específico (por ejemplo, Mundo 1, Mundo 2, Mundo 3).  
-Esto asegura que todos los componentes de un nivel (mapa, terreno, enemigos, power-ups, portales) mantengan coherencia con la estética, reglas y diseño del mundo correspondiente.
+![Imagen Visual del Sistema](https://github.com/user-attachments/assets/06b64b94-f013-4839-9d3c-8d03e157b6c0)
 
 ---
 
-### Componentes Clave
+### 🧍‍♂️ **3.1. Personaje del Jugador – `ABombBotCharacter`**
 
-#### Abstract Factory: `IIWorld_Factory`
-- **Responsabilidad:** Define la interfaz para crear una familia de objetos relacionados:
-  - Mapas
-  - Terrenos
+Clase principal que representa al jugador en el entorno de juego.
+
+**🔧 Funcionalidades Principales:**
+
+- 🧭 **Movimiento y Cámara:**  
+  Utiliza `USpringArmComponent` y `UCameraComponent` para el seguimiento dinámico del jugador, junto con `UCharacterMovementComponent`.
+
+- 🎮 **Entrada (Input):**  
+  Integración con el sistema `Enhanced Input` para accionar movimientos, saltos, colocación de bombas y pausa.
+
+- ❤️ **Gestión de Vidas y Respawn:**  
+  Control de durabilidad, invulnerabilidad temporal, y lógica de reaparecimiento (`RespawnDelay`).
+
+- 💣 **Colocación de Bombas:**  
+  Instanciación de objetos `ABomba` con control de distancia y cantidad máxima activa.
+
+- ⚡ **Interacción con Power-Ups:**  
+  Activación de efectos como velocidad, curación o inmortalidad mediante temporizadores.
+
+- 🖥️ **Interfaz de Usuario (UI):**  
+  Control y actualización de widgets como `UWUI_Principal`, Game Over y Pausa (`UUserWidget`).
+
+- 🏆 **Puntuación:**  
+  Registro y actualización de puntos a través de `UBombBotGameInstance`.
+
+---
+
+### 🌍 **3.2. Objetos del Mundo**
+
+#### 🧱 **3.2.1. Bloques**
+
+Tipos de bloques y su comportamiento estructural:
+
+- `ABloque` — Bloque básico no destructible.
+- `ABloqueGeneral` — Clase base de bloques destructibles.
+- `ABloqueDestructibleBase` — Implementación intermedia que contiene subfragmentos.
+- `ASubBloqueBase` — Fragmentos individuales generados tras una destrucción.
+- **Bloques Concretos:**  
+  - `ABloque_Madera`, `ABloque_Piedra`, `ABloque_Pasto`, `ABloque_Tierra`.
+
+#### 💣 **3.2.2. Bombas – `ABomba`**
+
+Componentes y lógica asociados a las bombas:
+
+- ⏱️ **Temporizador de Explosión**
+- 🔊 **Efectos Visuales y Sonoros:**  
+  Animaciones, partículas (`UParticleSystem`) y audio (`USoundBase`).
+- 🔥 **Rango de Explosión:**  
+  Creación de múltiples instancias `AExplosion` para simular el área de daño.
+- 🧿 **Mecanismo de Bloqueo:**  
+  Uso de `ALockSphere` para control de proximidad del jugador.
+- 🧮 **Gestión de Bombas Colocadas**
+
+#### 💥 **3.2.3. Explosiones – `AExplosion`**
+
+- 📈 **Propagación:**  
+  Movimiento en múltiples direcciones.
+- 🧱 **Detección de Impacto:**  
+  Interacción con entorno y enemigos.
+- 🌠 **Efectos Visuales**
+- 🎯 **Puntuación y Daño**
+
+#### 🧪 **3.2.4. Power-Ups – `APowerUp` y Derivados**
+
+Objetos recolectables con efectos especiales:
+
+- `APowerUp` – Clase abstracta base.  
+- `APowerUp_Inmortalidad` – Invulnerabilidad temporal.  
+- `APowerUp_Velocidad` – Aumento de velocidad.  
+- `APoweUp_Curacion` – Restauración de vidas.
+
+---
+
+### 🤖 **3.3. Sistema de Enemigos**
+
+Inteligencia artificial y comportamiento de enemigos:
+
+- `AEnemigo` – Clase base con lógica de patrullaje y detección.  
+- `AEnemigo_Bomb` – Enemigo kamikaze con explosión.  
+- `AEnemigo_Comun` – Contacto físico con daño + drop aleatorio de power-up.  
+- `AGenerador_Enemigos` – Spawn periódico configurable.
+
+---
+
+### 🧩 **3.4. Interfaz de Usuario (UI/HUD)**
+
+- `UWUI_Principal` – Muestra vidas y puntuación.  
+- **Widgets de Estado:**  
+  Activación al pausar o morir (`UUserWidget`).
+
+---
+
+### 🧠 **3.5. Gestión del Juego – `UBombBotGameInstance`**
+
+Clase persistente para el estado global:
+
+- 🎯 **Puntuación Global:**  
+  Registro centralizado del score, accesible desde cualquier parte del juego.
+
+---
+
+
+
+---
+
+# 🛠️ Documentación Técnica del Proyecto BombBot
+
+Este apartado detalla la arquitectura del videojuego **BombBot**, con un enfoque especial en el uso de **patrones de diseño de software** aplicados a la generación procedural de niveles, gestión de objetos y lógica central del juego.
+
+---
+
+## 📌 Introducción
+
+El proyecto **BombBot** adopta múltiples **patrones de diseño** para lograr un sistema:
+
+- 📦 **Modular**
+- 🧩 **Flexible**
+- 🔧 **Fácil de mantener y extender**
+
+Esto permite incorporar nuevos tipos de mundos, enemigos y power-ups sin reescribir el núcleo del código, apoyándose en principios SOLID y reutilización de componentes.
+
+---
+
+## 📐 Patrones de Diseño Aplicados
+
+Los siguientes patrones están implementados de forma destacada:
+
+- 🧱 **Builder Pattern (Constructor)**
+- 🏭 **Abstract Factory Pattern (Fábrica Abstracta)**
+- ⚙️ **Factory Method Pattern (Método de Fábrica)**
+- 🎛️ **Facade Pattern (Fachada)**
+
+---
+
+## 🧱 1. Builder Pattern – *Constructor*
+
+### 📖 Definición
+
+El **Builder Pattern** separa la construcción de un objeto complejo de su representación. Un **Director** controla el proceso de construcción, mientras que diferentes **Builders** definen las implementaciones específicas.
+
+---
+
+### 🎯 Aplicación en BombBot: Generación de Niveles
+
+Cada mundo (`World1`, `World2`, `World3`) tiene su propio builder que sigue una estructura común orquestada por un director (`ALevels_Director`).  
+Esto permite reutilizar lógica general y adaptar la construcción a diferentes entornos con mínima duplicación.
+
+---
+
+### 🧩 Componentes Clave
+
+#### 🎬 Director → `ALevels_Director`
+
+- **Rol:** Controla el proceso de construcción.
+- **Métodos:**  
+  - `CreateLevel1()`, `CreateLevel2()`, etc.
+  - Ejecutan pasos de construcción definidos por el builder activo.
+- **Archivo:** `Levels_Director.h / .cpp`
+
+---
+
+#### 🧱 Abstract Builder → `IILevels_Builder`
+
+- **Rol:** Interfaz para definir los métodos de construcción del mapa, enemigos y objetos.
+- **Archivo:** `ILevels_Builder.h`
+
+---
+
+#### 🧰 Concrete Builders
+
+- `AWorld1_Builder`  
+- `AWorld2_Builder`  
+- `AWorld3_Builder`
+
+**Rol:**  
+Implementan la lógica específica de construcción de cada mundo. Utilizan una **Factory** propia para delegar la creación de objetos concretos (bloques, enemigos, power-ups).
+
+---
+
+#### 🗺️ Producto Final → El Nivel
+
+- Es el conjunto completo de bloques, enemigos y objetos generados.
+- Se considera el "objeto complejo" que resulta del proceso de construcción.
+
+---
+
+### 📊 Diagrama UML – Builder Pattern
+
+![Diagrama UML - Builder Pattern](https://github.com/user-attachments/assets/0aee3dad-a3a9-4833-ae48-a05fbd7b481f)
+
+---
+
+### 🧠 Flujo de Construcción (Explicación)
+
+1. Se instancia el `ALevels_Director`.
+2. Se le asigna un `Concrete Builder` (por ejemplo, `AWorld1_Builder`).
+3. El director llama a métodos como:
+   - `BuildMap()`
+   - `BuildEnemy()`
+   - `BuildPowerUps()`
+4. El builder ejecuta estas funciones con lógica personalizada.
+5. Cada builder invoca a su **Factory** correspondiente (`AWorldX_Factory`) para crear los objetos reales del mundo.
+
+---
+
+### ✅ Ventajas
+
+- 🔁 **Reutilización de lógica de construcción**
+- 🛠️ **Facilidad para crear nuevos tipos de niveles**
+- 🔄 **Cambio dinámico del entorno sin modificar el código base**
+- 🎯 **Separación clara entre la lógica de construcción y los objetos concretos**
+
+---
+
+---
+
+## 🏭 2. Abstract Factory Pattern – *Fábrica Abstracta*
+
+### 📖 Definición
+
+El **Abstract Factory Pattern** proporciona una interfaz para crear **familias de objetos relacionados** sin especificar sus clases concretas.  
+Este patrón permite al cliente generar componentes que mantienen **consistencia temática y funcional**.
+
+---
+
+### 🌍 Aplicación en BombBot: Creación de Objetos del Mundo
+
+En *BombBot*, se utiliza este patrón para generar todos los elementos pertenecientes a un mundo específico:  
+🏞️ **bloques**, 🧨 **enemigos**, ⚡ **power-ups**, y 🌀 **portales** se producen a través de una misma fábrica, garantizando coherencia estética y funcional en cada nivel.
+
+---
+
+### 🧩 Componentes Clave
+
+#### 🧪 Abstract Factory → `IIWorld_Factory`
+
+- **Rol:**  
+  Interfaz para construir componentes clave de un mundo:
+  - Mapa
+  - Terreno
   - Enemigos
-  - Power-ups
+  - Power-Ups
   - Portales
-- **Ubicación:** `IWorld_Factory.h`
+- **Archivo:** `IWorld_Factory.h`
 
-#### Concrete Factories:
-- `AWorld1_Factory`
-- `AWorld2_Factory`
+---
+
+#### 🏗️ Concrete Factories
+
+- `AWorld1_Factory`  
+- `AWorld2_Factory`  
 - `AWorld3_Factory`
 
 **Responsabilidad:**  
-Cada clase implementa `IIWorld_Factory` para producir productos concretos acordes a su mundo.  
-Por ejemplo, `AWorld1_Factory` genera enemigos, bloques y power-ups específicos del Mundo 1.
+Implementan la lógica para construir objetos específicos según el mundo.  
+Por ejemplo, `AWorld1_Factory` construye enemigos y bloques con las propiedades visuales y de comportamiento del Mundo 1.
 
-**Ubicación:** Archivos `.h` y `.cpp` correspondientes a cada fábrica.
+**Ubicación:** Archivos `.h` y `.cpp` por fábrica (`World1_Factory.h`, etc.).
 
-#### Abstract Products  
-Son las interfaces o clases base de los objetos que se crean a través de la fábrica abstracta. Algunos ejemplos:
-- `ABloqueGeneral`
-- `AEnemigo`
+---
+
+#### 📦 Abstract Products
+
+Interfaces o clases base que definen las características comunes de los objetos que se generan:
+
+- `ABloqueGeneral`  
+- `AEnemigo`  
 - `APowerUp`
 
-**Ubicación:** Archivos de definición de clases base como `BloqueGeneral.h`, `Enemigo.h`, `PowerUp.h`
+**Archivo:** Archivos base como `BloqueGeneral.h`, `Enemigo.h`, `PowerUp.h`
 
-#### Concrete Products
-Son las implementaciones concretas de los productos creados por cada fábrica, tales como:
-- `ABloque_Madera`, `ABloque_Piedra`
+---
+
+#### 🧱 Concrete Products
+
+Instancias concretas creadas por cada fábrica:
+
+- `ABloque_Madera`, `ABloque_Piedra`, `ABloque_Pasto`
 - `AEnemigo_Comun`
 - `APowerUp_Inmortalidad`, `APowerUp_Velocidad`, `APowerUp_Curacion`
 
-**Ubicación:** Archivos como `Bloque_Madera.h`, `Enemigo_Comun.h`, `PowerUp_Inmortalidad.h`, etc.
+**Archivo:** Por ejemplo, `Bloque_Madera.h`, `Enemigo_Comun.h`, `PowerUp_Inmortalidad.h`
 
 ---
 
-### Diagrama UML de Clases (Abstract Factory Pattern)
+### 📊 Diagrama UML – Abstract Factory Pattern
 
-   ![image](https://github.com/user-attachments/assets/54bf9a22-c22b-4f4f-aa03-cb43a688ccaf)
-
-### Explicación del Uso
-
-Los *Concrete Builders* (por ejemplo, `AWorld1_Builder`) dependen de una instancia de `IIWorld_Factory` para obtener los componentes específicos de cada mundo.  
-Por ejemplo, `AWorld1_Factory` contiene la lógica necesaria para crear los bloques, enemigos y power-ups del Mundo 1.
-
-Si se desea añadir un nuevo mundo (como un "Mundo 4") con estilos visuales o comportamientos distintos, bastaría con implementar una nueva clase `AWorld4_Factory` que herede de `IIWorld_Factory`.  
-No sería necesario modificar los constructores existentes ni al `Director`.
-
-Dentro de cada `AWorldX_Factory`, la creación de bloques se delega a `AWorld1_FactoryBloques`, lo cual representa una aplicación del **Factory Method Pattern**.  
-La creación de enemigos se realiza directamente mediante `SpawnActor<AEnemigo_Comun>` o `SpawnActor<AGenerador_Enemigos>`, y los power-ups se generan a través de `APowerUps_Factory`.
+![Diagrama UML - Abstract Factory](https://github.com/user-attachments/assets/54bf9a22-c22b-4f4f-aa03-cb43a688ccaf)
 
 ---
 
-## 3. Factory Method Pattern (Método de Fábrica)
+### ⚙️ Flujo de Uso en el Proyecto
 
-### Definición
-
-El patrón **Factory Method** define una interfaz para la creación de objetos, pero permite que las subclases decidan qué clase instanciar.  
-Esto permite delegar la responsabilidad de instanciación a las subclases, logrando una mayor flexibilidad y extensibilidad.
-
----
-
-### Contexto en el Proyecto: Creación de Bloques y Power-Ups Específicos
-
-Este patrón se observa principalmente en dos subsistemas del juego:
-
-- **Creación de Tipos de Bloques:** Una fábrica especializada implementa un método que, dependiendo del tipo o identificador recibido, instancia un bloque específico.
-- **Creación de Tipos de Power-Ups:** Similar al caso anterior, pero aplicado a los power-ups.
+1. Cada `Concrete Builder` (`AWorld1_Builder`, etc.) **recibe una instancia de fábrica** (`IIWorld_Factory`) para construir sus componentes.
+2. Llama a métodos como:
+   - `CrearBloque()`
+   - `CrearEnemigo()`
+   - `CrearPowerUp()`
+3. La fábrica devuelve las implementaciones específicas según el mundo.
+4. Así, el constructor puede armar el mundo sin preocuparse por los detalles de implementación de cada objeto.
 
 ---
 
-### Componentes Clave (Bloques)
+### 🔄 Expansión: Agregar un Nuevo Mundo
 
-#### Creator (Concrete): `AWorld1_FactoryBloques`
+Para añadir, por ejemplo, un **Mundo 4**:
+
+✅ Solo se necesita crear una clase `AWorld4_Factory` que herede de `IIWorld_Factory`.  
+✅ No se modifica el código del `Director` ni los `Builders` existentes.  
+✅ Se conserva la coherencia visual y lógica del nuevo entorno.
+
+---
+
+### 🧬 Relación con otros Patrones
+
+- Las **subfábricas internas** (`AWorld1_FactoryBloques`) implementan el **Factory Method Pattern**.
+- La creación de enemigos y power-ups utiliza también `SpawnActor` con clases dinámicas, delegando la variabilidad a nivel de instancia.
+
+---
+
+### ✅ Ventajas
+
+- 🎨 **Estética y funcionalidad coherentes por mundo**
+- 📚 **Código extensible y desacoplado**
+- 🔄 **Cambios o nuevos mundos sin refactorización masiva**
+- 💡 **Complemento perfecto para el Builder Pattern**
+
+---
+
+---
+
+## 🧪 3. Factory Method Pattern – *Método de Fábrica*
+
+### 📖 Definición
+
+El **Factory Method** define una interfaz para la creación de objetos, pero permite que las subclases decidan qué clase concreta instanciar.  
+🔧 Este enfoque permite delegar la lógica de instanciación, favoreciendo la **flexibilidad**, **extensibilidad** y **desacoplamiento**.
+
+---
+
+### 🧱 Aplicación en BombBot: Creación de Bloques y Power-Ups
+
+El patrón se implementa claramente en dos módulos del juego:
+
+1. **Generación de Bloques del Mapa**  
+2. **Generación de Power-Ups tras eliminar enemigos**
+
+Ambos sistemas utilizan **parámetros de entrada** para decidir qué tipo específico de objeto generar.
+
+---
+
+## 🔷 A. Sistema de Bloques
+
+### 🧩 Componentes Clave
+
+#### 🏗️ Creator (Concreto): `AWorld1_FactoryBloques`
+
 - **Responsabilidad:**  
-  Implementa el método `CrearBloque()`, encargado de instanciar diferentes tipos de bloques (`ABloque_Madera`, `ABloque_Piedra`, `ABloque_Pasto`, `ABloque_Tierra`) según un parámetro de entrada (`TypeBlock`).
+  Implementa el método `CrearBloque(TypeBlock)`, que recibe una cadena de texto (`"BloqueMadera"`, `"BloquePiedra"`, etc.) y genera el bloque correspondiente.
 
-#### Product (Abstract): `ABloqueGeneral`  
-- **Responsabilidad:**  
-  Define la interfaz base para todos los bloques del juego. En muchos casos, estos heredan también de `ABloqueDestructibleBase`.
+---
 
-#### Concrete Products:
-- `ABloque_Madera`
-- `ABloque_Piedra`
-- `ABloque_Pasto`
+#### 🧱 Producto Abstracto: `ABloqueGeneral`
+
+- **Rol:**  
+  Clase base para todos los bloques.  
+  En muchos casos, extiende `ABloqueDestructibleBase`.
+
+---
+
+#### 🧱 Productos Concretos
+
+- `ABloque_Madera`  
+- `ABloque_Piedra`  
+- `ABloque_Pasto`  
 - `ABloque_Tierra`
 
-**Responsabilidad:**  
-Implementan la funcionalidad concreta de los diferentes tipos de bloques presentes en el juego.
+> Cada clase representa un tipo de bloque con estética y comportamiento propio.
 
 ---
 
-### Diagrama UML de Clases (Factory Method Pattern)
+### 📊 Diagrama UML – Bloques (Factory Method)
 
-![image](https://github.com/user-attachments/assets/bca971bf-f44c-4373-83cb-2e77a4ff5d40)
-
-### Explicación del Uso (Bloques)
-
-Dentro de `AWorld1_Factory`, cuando se necesita crear un bloque para el mapa (en el método `CreateBlocks()`), se delega la creación a una instancia de `AWorld1_FactoryBloques` mediante su método `CrearBloque()`.
-
-Este método actúa como un **Factory Method parametrizado**:  
-Recibe una cadena (`TypeBlock`) que indica el tipo de bloque a instanciar (por ejemplo, `"BloqueMadera"`, `"BloquePiedra"`, etc.), y luego crea la instancia correspondiente utilizando `GetWorld()->SpawnActor`.
-
-Esta centralización de la lógica de creación permite:
-
-- Añadir nuevos tipos de bloques simplemente extendiendo `CrearBloque()` con un nuevo `else if`.
-- Implementar una nueva clase concreta de bloque sin modificar otras clases consumidoras.
-- Mantener bajo acoplamiento y alta cohesión.
+![Diagrama Factory Method - Bloques](https://github.com/user-attachments/assets/bca971bf-f44c-4373-83cb-2e77a4ff5d40)
 
 ---
 
-### Componentes Clave (Power-Ups)
+### ⚙️ Flujo de Uso
 
-#### Creator (Concrete): `APowerUps_Factory`
+1. Dentro de `AWorld1_Factory`, al construir un nivel, se llama a `CrearBloque(TypeBlock)`.
+2. Este método analiza el tipo de bloque solicitado.
+3. Instancia dinámicamente el bloque con `SpawnActor<>()`.
+4. Devuelve el bloque al builder o al mundo.
+
+✅ Agregar nuevos bloques es tan simple como:
+- Crear la nueva clase (e.g., `ABloque_Arena`)
+- Añadir una línea en `CrearBloque()`.
+
+---
+
+## 🔶 B. Sistema de Power-Ups
+
+### 🧩 Componentes Clave
+
+#### 🏗️ Creator (Concreto): `APowerUps_Factory`
 
 - **Responsabilidad:**  
-  Contiene el método `CreatePowerUp()`, un Factory Method que instancia diferentes tipos de power-ups según un parámetro entero `PowerUpType`.
+  Implementa `CreatePowerUp(PowerUpType)`, que genera un power-up basado en un código entero.
 
-#### Product (Abstract): `APowerUp`
+---
+
+#### ⚡ Producto Abstracto: `APowerUp`
+
+- **Rol:**  
+  Clase base de todos los objetos power-up.  
+  Define interfaz común para efectos, activación, etc.
+
+---
+
+#### ⚡ Productos Concretos
+
+- `APowerUp_Inmortalidad`  
+- `APowerUp_Velocidad`  
+- `APowerUp_Curacion`
+
+> Cada uno aplica un efecto distinto al jugador tras ser recogido.
+
+---
+
+### 📊 Diagrama UML – Power-Ups (Factory Method)
+
+![Diagrama Factory Method - PowerUps](https://github.com/user-attachments/assets/68f1cad0-4cb6-468d-b07b-50610bd6c5e1)
+
+---
+
+### ⚙️ Flujo de Uso
+
+1. Un enemigo muere (`AEnemigo_Comun`).
+2. Se determina aleatoriamente si se genera un power-up.
+3. Se llama a `CreatePowerUp(PowerUpType)` desde `APowerUps_Factory`.
+4. El método instancia el tipo adecuado mediante `SpawnActor`.
+
+✅ El enemigo **no necesita conocer la clase específica** del power-up.
+
+---
+
+### 🚀 Ventajas del Enfoque
+
+- 📦 **Centraliza la lógica de creación**
+- 🔁 **Facilita añadir nuevos tipos**
+- 🧼 **Reduce acoplamiento entre subsistemas**
+- 🔧 **Permite configuraciones dinámicas o parametrizadas**
+- 💡 **Extensible sin alterar el cliente (Principio de Abierto/Cerrado)**
+
+---
+
+---
+
+## 🧱 4. Facade Pattern – *Patrón Fachada*
+
+### 📖 Definición
+
+El patrón **Facade** proporciona una **interfaz simplificada** a un conjunto de subsistemas complejos, ocultando los detalles internos y exponiendo una API clara para el cliente.  
+🎯 Su objetivo es **reducir el acoplamiento**, **mejorar la organización** y **facilitar la interacción** con sistemas complejos.
+
+---
+
+### 🧠 Aplicación en BombBot: Comportamiento del Jefe Final
+
+En *BombBot*, el **JefeFinal** es una entidad con múltiples capacidades de ataque. Para orquestar su comportamiento, se implementa el patrón **Fachada**, encapsulando subsistemas como:
+
+- 🌪️ Ataques de esbirros  
+- 💣 Caída de escombros  
+- 🔫 Disparos en ráfagas
+
+Todo esto queda detrás de la interfaz principal `JefeFinal`, que se encarga de coordinar y ejecutar los ataques de forma sincronizada.
+
+---
+
+## 🧩 Componentes Clave
+
+### 🧷 Fachada: `JefeFinal`
 
 - **Responsabilidad:**  
-  Define la interfaz base que todos los objetos PowerUp deben implementar.
+  Gestiona los ataques y comportamientos generales del jefe final, coordinando múltiples subsistemas sin exponer su complejidad.
 
-#### Concrete Products:
-
-- `APowerUp_Inmortalidad`
-- `APowerUp_Velocidad`
-- `APoweUp_Curacion`
-
-- **Responsabilidad:**  
-  Representan implementaciones específicas de power-ups con efectos distintos.
+- **Ubicación:**  
+  `JefeFinal.h`, `JefeFinal.cpp`
 
 ---
 
-### Diagrama UML de Clases (Power-Ups - Factory Method Pattern)
+### 🔧 Subsistemas
 
-![image](https://github.com/user-attachments/assets/68f1cad0-4cb6-468d-b07b-50610bd6c5e1)
+| Subsistema             | Función                                       |
+|------------------------|-----------------------------------------------|
+| `FSpawnerEsbirros`     | Genera esbirros para dificultar el combate    |
+| `FSpawnerEscombros`    | Lanza escombros sobre el jugador              |
+| `FSpawnerDisparos`     | Dispara proyectiles en ráfagas                |
 
-### Explicación del Uso (Power-Ups)
-
-Cuando un enemigo (`AEnemigo_Comun`) es destruido, existe una probabilidad de que invoque a `APowerUps_Factory` para generar un power-up. El método `CreatePowerUp()` de `APowerUps_Factory` toma como parámetro un entero (`PowerUpType`), que determina qué tipo específico de power-up instanciar:
-
-- `APowerUp_Inmortalidad`
-- `APowerUp_Velocidad`
-- `APoweUp_Curacion`
-
-Este enfoque abstrae completamente la lógica de creación de power-ups. La clase del enemigo simplemente solicita un power-up por tipo, sin preocuparse por detalles de implementación ni por conocer las clases concretas involucradas. Esto promueve el principio de inversión de dependencias y facilita la extensión del sistema.
+> 🧬 Cada subsistema tiene una única responsabilidad, siguiendo el **principio de responsabilidad única**, lo cual permite mantener modularidad y facilidad de prueba.
 
 ---
 
-## 4. Facade Pattern (Patrón Fachada)
+### ⚙️ Explicación del Uso
 
-### Definición
+- El cliente (por ejemplo, el sistema de juego) no se comunica directamente con `FSpawnerEsbirros`, `FSpawnerDisparos`, ni `FSpawnerEscombros`.
+- En su lugar, llama a métodos del objeto `JefeFinal`, que se encarga de **delegar** y **coordinar** las acciones en sus subsistemas internos.
 
-El patrón **Fachada (Facade)** permite ocultar la complejidad de un sistema al proporcionar una interfaz simplificada a un conjunto de subsistemas. De esta manera, el cliente puede interactuar con el sistema de forma más sencilla, sin preocuparse por los detalles internos.
-
----
-
-### Contexto en el Proyecto: Comportamiento del Jefe Final
-
-En *BombBot*, el patrón **Facade** se utiliza para encapsular la lógica de comportamiento del jefe final del juego. Este patrón permite agrupar diferentes subsistemas (ataques, esbirros, disparos, etc.) bajo una única interfaz: `JefeFinal`.
-
-Esto mejora la modularidad del código, facilita el mantenimiento y permite agregar nuevas funcionalidades sin alterar directamente los subsistemas.
+🔄 Este diseño permite que:
+- Se agreguen nuevos ataques fácilmente (solo hay que crear un nuevo subsistema).
+- Se mantenga un control centralizado y limpio.
+- Se respete la **abstracción de alto nivel** sin ensuciar el código cliente.
 
 ---
 
-### Componentes Clave
+## 🎮 Gameplay Grabado
 
-#### Fachada: `JefeFinal`
-- **Responsabilidad:** Coordina el comportamiento del jefe final utilizando múltiples subsistemas encargados de ejecutar ataques específicos.
-- **Ubicación:** `JefeFinal.h` / `JefeFinal.cpp`
-
-#### Subsistemas:
-- `FSpawnerEsbirros`: Encargado de generar esbirros durante la batalla.
-- `FSpawnerEscombros`: Genera escombros que caen sobre el jugador, añadiendo presión constante.
-- `FSpawnerDisparos`: Dispara proyectiles en ráfagas hacia el jugador.
-
-> Cada subsistema encapsula una funcionalidad específica del jefe, lo que mejora la separación de responsabilidades y facilita la extensión del comportamiento.
-
-**Responsabilidad:**  
-Cada clase hace que el jefe final funcione adecuadamente, siendo que cada ataque sea un subsistema, esto mejora la modularidad y facilita el desarrollo del jefe.
-
-**Ubicación:** Archivos `.h` y `.cpp` correspondientes a cada subsistema.
-
+[![Gameplay BombBot](https://github.com/user-attachments/assets/05c1c8c9-1b26-4fc6-9e58-b423d4df9216)](https://youtu.be/_IjVIPqWHDM?si=VkpBT7_jAyxYNzRl)
+➡️ *Haz clic en la imagen para ver el video.*
 
 ---
 
-<!-- ### Diagrama UML de Clases (Facade Pattern)
+## 💾 ¿Cómo instalar el juego?
 
-   ![image](https://github.com/user-attachments/assets/54bf9a22-c22b-4f4f-aa03-cb43a688ccaf)-->
+> ⚠️ El juego se encuentra en **fase Pre-Alpha**.
 
-### Explicación del Uso
-
-El objeto `JefeFinal` actúa como la **fachada** principal que interactúa con múltiples subsistemas de ataque. Cada subsistema está especializado en un comportamiento específico, como generar enemigos (`FSpawnerEsbirros`), lanzar escombros (`FSpawnerEscombros`) o disparar ráfagas (`FSpawnerDisparos`).
-
-Este enfoque permite que el `JefeFinal` combine fácilmente diferentes comportamientos, orquestándolos sin que el cliente tenga que conocer los detalles internos de cada clase. Agregar nuevos ataques se vuelve sencillo, ya que solo se requiere crear un nuevo subsistema e integrarlo en la fachada sin afectar el resto del código.
-
-La modularidad obtenida con el patrón Facade favorece el mantenimiento, la reutilización de código y la escalabilidad del sistema de enemigos.
+### Instrucciones:
+1. Clona el repositorio del proyecto desde GitHub.
+2. Abre el proyecto en **Unreal Engine**.
+3. Ejecuta el juego desde el Editor o genera el ejecutable.
 
 ---
 
-### Gameplay grabado del juego
+## ✅ Conclusión
 
-[![WhatsApp Image 2025-06-22 at 13 17 33_b422c368](https://github.com/user-attachments/assets/05c1c8c9-1b26-4fc6-9e58-b423d4df9216)](https://youtu.be/_IjVIPqWHDM?si=VkpBT7_jAyxYNzRl)
+Este proyecto ha demostrado cómo los **patrones de diseño** permiten construir videojuegos complejos de forma estructurada y escalable:
 
-click en la imagen para ver.
+🔧 **Builder Pattern**  
+Permite la creación paso a paso de niveles personalizados y fácilmente intercambiables.
+
+🏭 **Abstract Factory Pattern**  
+Facilita la creación coherente de objetos relacionados por "mundo", manteniendo la estética y reglas uniformes.
+
+🏗️ **Factory Method Pattern**  
+Desacopla la lógica de instanciación de bloques y power-ups, permitiendo extensibilidad sin alterar el código cliente.
+
+🎯 **Facade Pattern**  
+Simplifica el control del jefe final al ocultar múltiples comportamientos bajo una interfaz limpia, haciendo que su lógica sea fácil de expandir y mantener.
 
 ---
 
-### Como instalar el juego
+Con esta arquitectura, *BombBot* queda preparado para futuras expansiones:  
+🌍 nuevos mundos, 👾 enemigos más complejos y 🔮 nuevas mecánicas… todo sin romper el código ya existente.
 
-Como el juego es aún una versión en Pre-alpha, para instalar el juego simplemente se debe clonar el repositorio y jugar.
-
-### Conclusión
-
-Esta fue nuestra aplicación de los patrones **Builder**, **Abstract Factory** y **Factory Method** en nuestro proyecto *BombBot* que ha sido clave para lograr una arquitectura robusta, modular y extensible.
-
-- **Builder Pattern**: Permite la construcción paso a paso de niveles complejos, posibilitando que cada "mundo" tenga una configuración única sin modificar la lógica central del flujo de creación.
-  
-- **Abstract Factory Pattern**: Garantiza la coherencia temática de cada mundo al proporcionar familias de objetos relacionadas entre sí (bloques, enemigos, power-ups), asegurando compatibilidad y facilitando cambios globales por mundo.
-
-- **Factory Method Pattern**: Facilita la creación específica de tipos de bloques y power-ups mediante métodos parametrizados, aislando el código cliente de las decisiones de instanciación concretas.
-
-- **Facade Pattern**: Simplifica el control del jefe final al encapsular múltiples subsistemas de ataque bajo una única interfaz (JefeFinal), lo que permite gestionar comportamientos complejos de forma modular, flexible y extensible.
-
-En conjunto, estos patrones no solo mejoran la mantenibilidad y escalabilidad del código, sino que también sientan las bases para futuras expansiones del juego, como la incorporación de nuevos mundos, enemigos, o mecánicas de juego, con un mínimo impacto en el código existente.
-
-
+---
