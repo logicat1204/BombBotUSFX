@@ -54,11 +54,11 @@
 ## 👥 **Participantes**
 
 **Trabajo realizado por:**
-- **Arancibia Estrada, Álvaro David** — `Ing. Ciencias de la Computación`
-- **Mollinedo Siles, Renzo Sebastián** — `Ing. Ciencias de la Computación`
-- **Quispe Ticona, Josias Asael** — `Ing. Ciencias de la Computación`, `Ing. Tecnologías de la Información y Seguridad`
-- **Magne Ordoñez, Pedro Jhoel Antonio** — `Ing. Ciencias de la Computación`
-- **Cornejo Moscoso, Gabriel Orlando** — `Ing. Ciencias de la Computación`
+- **Arancibia Estrada Álvaro David** — `Ing. Ciencias de la Computación`
+- **Mollinedo Siles Renzo Sebastián** — `Ing. Ciencias de la Computación`
+- **Quispe Ticona Josias Asael** — `Ing. Ciencias de la Computación`, `Ing. Tecnologías de la Información y Seguridad`
+- **Magne Ordoñez Pedro Jhoel Antonio** — `Ing. Ciencias de la Computación`
+- **Cornejo Moscoso Gabriel Orlando** — `Ing. Ciencias de la Computación`
 
 ---
 
@@ -657,12 +657,13 @@ Todo esto queda detrás de la interfaz principal `JefeFinal`, que se encarga de 
 
 ### Instrucciones:
 1. Clona el repositorio del proyecto desde GitHub.
-2. Abre el proyecto en **Unreal Engine**.
-3. Ejecuta el juego desde el Editor o genera el ejecutable.
+2. Abre el archivo ejecutable. caso contrario:
+3. Abre el proyecto en **Unreal Engine**.
+4. Ejecuta el juego desde el Editor o genera el ejecutable.
 
 ---
 
-## ✅ Conclusión
+## Conclusión
 
 Este proyecto ha demostrado cómo los **patrones de diseño** permiten construir videojuegos complejos de forma estructurada y escalable:
 
