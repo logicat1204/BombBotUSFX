@@ -666,11 +666,9 @@ Todo esto queda detrás de la interfaz principal `JefeFinal`, que se encarga de 
 ### Instrucciones:
 
 ## Primera opción
-1.- Descargar el juego en: https://drive.google.com/drive/folders/1BCfEl1pxId1k9TYIFyaTzM-02yAt8tfI.
-
-2.- Una vez descargado descomprimir.
-
-3.- Ejecutar el ejecutable "BombBot.exe".
+1. Descargar el juego en: https://drive.google.com/drive/folders/1BCfEl1pxId1k9TYIFyaTzM-02yAt8tfI.
+2. Una vez descargado descomprimir.
+3. Ejecutar el ejecutable "BombBot.exe".
 
 ## Segunda opción
 1. Clona el repositorio del proyecto desde GitHub.
