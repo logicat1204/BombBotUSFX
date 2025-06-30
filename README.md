@@ -54,6 +54,7 @@
 ## 🏆 **EXPO IA & PROGRAMACIÓN 2025**
 
 **Categoría:** Programación Libre
+
 **Reconocimiento:** *Tercer Lugar* 🥉
 
 ---
