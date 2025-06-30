@@ -51,6 +51,13 @@
 
 ---
 
+## 🏆 **EXPO IA & PROGRAMACIÓN 2025**
+
+**Categoría:** Programación Libre
+**Reconocimiento:** *Tercer Lugar* 🥉
+
+---
+
 ## 👥 **Participantes**
 
 **Trabajo realizado por:**
@@ -656,6 +663,13 @@ Todo esto queda detrás de la interfaz principal `JefeFinal`, que se encarga de 
 > ⚠️ El juego se encuentra en **fase Pre-Alpha**.
 
 ### Instrucciones:
+
+## Primera opción
+1.- Descargar el juego en: https://drive.google.com/drive/folders/1BCfEl1pxId1k9TYIFyaTzM-02yAt8tfI
+2.- Una vez descargado descomprimir.
+3.- Ejecutar el ejecutable "BombBot.exe".
+
+## Segunda opción
 1. Clona el repositorio del proyecto desde GitHub.
 2. Abre el archivo ejecutable. caso contrario:
 3. Abre el proyecto en **Unreal Engine**.
